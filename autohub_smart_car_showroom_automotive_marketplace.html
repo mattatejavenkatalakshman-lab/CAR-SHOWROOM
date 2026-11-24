@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOHUB — Your Dream Car. Your Journey Starts Here.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        auto: {
+                            bg: '#08080b',
+                            surface: '#111116',
+                            card: '#17171f',
+                            border: '#272733',
+                            red: '#e11d48',
+                            gold: '#f59e0b',
+                            silver: '#94a3b8'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.35s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #08080b;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #08080b; }
+        ::-webkit-scrollbar-thumb { background: #272733; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e11d48; }
+
+        .glass-nav {
+            background: rgba(8, 8, 11, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(to top, #08080b 8%, rgba(8, 8, 11, 0.72) 55%, rgba(8, 8, 11, 0.25) 100%),
+                        linear-gradient(to right, #08080b 18%, rgba(8, 8, 11, 0.45) 65%, transparent 100%);
+        }
+
+        .car-card-hover {
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .car-card-hover:hover {
+            transform: translateY(-6px);
+            border-color: rgba(225, 29, 72, 0.55);
+            box-shadow: 0 22px 35px -12px rgba(225, 29, 72, 0.22);
+        }
+
+        .accent-btn {
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            transition: all 0.25s ease;
+        }
+        .accent-btn:hover {
+            filter: brightness(1.12);
+            box-shadow: 0 10px 24px -6px rgba(225, 29, 72, 0.55);
+        }
+
+        .gold-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #08080b;
+            transition: all 0.25s ease;
+        }
+        .gold-btn:hover {
+            filter: brightness(1.08);
+            box-shadow: 0 10px 24px -6px rgba(245, 158, 11, 0.45);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-rose-600 selection:text-white">
+
+    <!-- ==================== TOP NAVIGATION BAR ==================== -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20 gap-3">
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-6">
+                    <button onclick="navigate('home')" class="flex items-center gap-2.5 focus:outline-none">
+                        <div class="w-10 h-10 rounded-xl accent-btn flex items-center justify-center text-white shadow-lg">
+                            <i class="fa-solid fa-gauge-high text-lg"></i>
+                        </div>
+                        <div class="text-left">
+                            <span class="font-display font-extrabold text-xl tracking-wider text-white block leading-none">AUTOHUB</span>
+                            <span class="text-[10px] text-amber-400 tracking-widest uppercase font-bold hidden sm:block">Smart Showroom</span>
+                        </div>
+                    </button>
+
+                    <!-- Desktop Links -->
+                    <nav class="hidden xl:flex items-center space-x-1">
+                        <button onclick="navigate('home')" data-nav="home" class="nav-link px-3 py-2 rounded-xl text-sm font-medium text-white bg-white/10">Home</button>
+                        <button onclick="navigate('explore', {condition: 'all'})" data-nav="explore" class="nav-link px-3 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition">Explore Cars</button>
+                        <button onclick="navigate('explore', {condition: 'New'})" data-nav="new" class="nav-link px-3 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition">New Cars</button>
+                        <button onclick="navigate('explore', {condition: 'Certified Used'})" data-nav="used" class="nav-link px-3 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition">Used Cars</button>
+                        <button onclick="navigate('brands')" data-nav="brands" class="nav-link px-3 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition">Brands</button>
+                        <button onclick="navigate('compare')" data-nav="compare" class="nav-link px-3 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition">
+                            Compare <span id="nav-compare-count" class="ml-1 px-1.5 py-0.5 text-[10px] rounded-full bg-rose-600 text-white font-bold">2</span>
+                        </button>
+                        <button onclick="navigate('services')" data-nav="services" class="nav-link px-3 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition">
+                            <i class="fa-solid fa-calculator text-amber-400 mr-1 text-xs"></i>EMI & AI
+                        </button>
+                        <button onclick="navigate('contact')" data-nav="contact" class="nav-link px-3 py-2 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition">Contact</button>
+                    </nav>
+                </div>
+
+                <!-- Right Action Cluster -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <!-- Quick Search Trigger -->
+                    <div class="hidden md:flex relative items-center">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 text-gray-400 text-xs"></i>
+                        <input
+                            type="text"
+                            id="header-quick-search"
+                            placeholder="Search Tata, BMW, SUV, EV..."
+                            onkeydown="if(event.key==='Enter') navigate('explore', {query: this.value})"
+                            class="w-48 lg:w-60 bg-auto-surface border border-auto-border focus:border-rose-500 rounded-xl pl-8 pr-3 py-2 text-xs text-white placeholder-gray-400 focus:outline-none transition"
+                        />
+                    </div>
+
+                    <!-- Book Test Drive CTA -->
+                    <button onclick="openBookingModal()" class="hidden sm:flex items-center gap-1.5 accent-btn px-3.5 py-2 rounded-xl text-xs font-bold text-white shadow">
+                        <i class="fa-solid fa-steering-wheel"></i>
+                        <span>Book Test Drive</span>
+                    </button>
+
+                    <!-- Role Switcher / Dashboard Link -->
+                    <div id="auth-header-slot"></div>
+
+                    <!-- Mobile Drawer Toggle -->
+                    <button onclick="toggleMobileMenu()" class="xl:hidden p-2.5 rounded-xl bg-auto-surface border border-auto-border text-gray-200">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden xl:hidden bg-auto-surface border-t border-auto-border px-4 py-4 space-y-2">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <button onclick="navigate('home'); toggleMobileMenu()" class="p-3 rounded-xl bg-auto-card text-left text-xs font-bold text-white"><i class="fa-solid fa-house mr-2 text-rose-500"></i>Home</button>
+                <button onclick="navigate('explore', {condition: 'all'}); toggleMobileMenu()" class="p-3 rounded-xl bg-auto-card text-left text-xs font-bold text-white"><i class="fa-solid fa-car mr-2 text-amber-400"></i>Explore Cars</button>
+                <button onclick="navigate('explore', {condition: 'New'}); toggleMobileMenu()" class="p-3 rounded-xl bg-auto-card text-left text-xs font-bold text-white"><i class="fa-solid fa-sparkles mr-2 text-rose-500"></i>New Cars</button>
+                <button onclick="navigate('explore', {condition: 'Certified Used'}); toggleMobileMenu()" class="p-3 rounded-xl bg-auto-card text-left text-xs font-bold text-white"><i class="fa-solid fa-certificate mr-2 text-emerald-400"></i>Used Cars</button>
+                <button onclick="navigate('brands'); toggleMobileMenu()" class="p-3 rounded-xl bg-auto-card text-left text-xs font-bold text-white"><i class="fa-solid fa-shield mr-2 text-amber-400"></i>Brands (14)</button>
+                <button onclick="navigate('compare'); toggleMobileMenu()" class="p-3 rounded-xl bg-auto-card text-left text-xs font-bold text-white"><i class="fa-solid fa-code-compare mr-2 text-rose-500"></i>Compare (Max 4)</button>
+                <button onclick="navigate('services'); toggleMobileMenu()" class="p-3 rounded-xl bg-auto-card text-left text-xs font-bold text-white"><i class="fa-solid fa-calculator mr-2 text-amber-400"></i>EMI & AI Assistant</button>
+                <button onclick="navigate('dashboard'); toggleMobileMenu()" class="p-3 rounded-xl bg-auto-card text-left text-xs font-bold text-white"><i class="fa-solid fa-gauge mr-2 text-rose-500"></i>My Dashboard</button>
+                <button onclick="navigate('about'); toggleMobileMenu()" class="p-3 rounded-xl bg-auto-card text-left text-xs font-bold text-gray-300"><i class="fa-solid fa-database mr-2"></i>Architecture</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- ==================== MAIN DYNAMIC VIEWPORT ==================== -->
+    <main id="app-root" class="pt-16 md:pt-20 min-h-screen"></main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-auto-surface border-t border-auto-border mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2 space-y-3">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl accent-btn flex items-center justify-center text-white">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+                        <span class="font-display font-extrabold text-xl tracking-wider text-white">AUTOHUB</span>
+                    </div>
+                    <p class="text-sm text-gray-400 max-w-md leading-relaxed">
+                        <strong>Your Dream Car. Your Journey Starts Here.</strong> India & Global Smart Car Showroom Marketplace connecting verified buyers, dealerships, sales representatives, and inventory hubs.
+                    </p>
+                    <p class="text-xs text-gray-500">
+                        Disclaimer: Sample showroom inventory & estimated on-road pricing shown for demonstration. Trademarks belong to respective automotive manufacturers; AUTOHUB operates as an independent multi-brand marketplace.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-display font-bold text-white text-xs uppercase tracking-wider mb-3">Marketplace</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><button onclick="navigate('explore', {condition: 'New'})" class="hover:text-rose-400 transition">New Car Showrooms</button></li>
+                        <li><button onclick="navigate('explore', {condition: 'Certified Used'})" class="hover:text-rose-400 transition">Certified Pre-Owned</button></li>
+                        <li><button onclick="navigate('brands')" class="hover:text-rose-400 transition">14 Global & Indian Brands</button></li>
+                        <li><button onclick="navigate('compare')" class="hover:text-rose-400 transition">4-Car Spec Comparison</button></li>
+                        <li><button onclick="navigate('services')" class="hover:text-rose-400 transition">Auto Loan EMI Calculator</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-display font-bold text-white text-xs uppercase tracking-wider mb-3">Portals & Engineering</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><button onclick="switchDemoRole('customer'); navigate('dashboard')" class="hover:text-amber-400 transition">Customer Dashboard</button></li>
+                        <li><button onclick="switchDemoRole('showroom_manager'); navigate('dashboard')" class="hover:text-amber-400 transition">Showroom Manager Portal</button></li>
+                        <li><button onclick="switchDemoRole('admin'); navigate('dashboard')" class="hover:text-amber-400 transition">Admin Control Panel</button></li>
+                        <li><button onclick="navigate('about')" class="hover:text-amber-400 transition">Full-Stack DB & API Docs</button></li>
+                        <li><button onclick="navigate('contact')" class="hover:text-amber-400 transition">Showroom Locator & Contact</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-auto-border mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+                <span>&copy; 2026 AUTOHUB Smart Car Showroom & Automotive Marketplace.</span>
+                <span>FastAPI + PostgreSQL/SQLite + Cloudinary + Razorpay Architecture</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- 1. Test Drive Booking Modal (Overlap Prevention & Booking ID Generator) -->
+    <div id="booking-modal" class="hidden fixed inset-0 z-[80] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-auto-card border border-auto-border rounded-3xl w-full max-w-xl p-6 sm:p-8 shadow-2xl animate-fade-in my-auto">
+            <div class="flex items-center justify-between mb-5">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-rose-500">Showroom Experience</span>
+                    <h3 class="font-display font-extrabold text-2xl text-white">Book a Test Drive</h3>
+                </div>
+                <button onclick="closeModal('booking-modal')" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/15 flex items-center justify-center text-gray-300">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form onsubmit="submitTestDriveBooking(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">Full Name *</label>
+                        <input type="text" id="td-name" required value="Rohan Verma" class="w-full bg-auto-surface border border-auto-border focus:border-rose-500 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">Phone Number *</label>
+                        <input type="tel" id="td-phone" required value="+91 98765 43210" class="w-full bg-auto-surface border border-auto-border focus:border-rose-500 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">Email Address *</label>
+                        <input type="email" id="td-email" required value="rohan.verma@example.com" class="w-full bg-auto-surface border border-auto-border focus:border-rose-500 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">Driving License / Exp.</label>
+                        <input type="text" id="td-exp" placeholder="e.g., 5 Years / Valid LMV" class="w-full bg-auto-surface border border-auto-border focus:border-rose-500 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">Select Vehicle *</label>
+                    <select id="td-car" required class="w-full bg-auto-surface border border-auto-border focus:border-rose-500 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none"></select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">Preferred Showroom *</label>
+                    <select id="td-showroom" required class="w-full bg-auto-surface border border-auto-border focus:border-rose-500 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none"></select>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">Preferred Date *</label>
+                        <input type="date" id="td-date" required class="w-full bg-auto-surface border border-auto-border focus:border-rose-500 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">Time Slot *</label>
+                        <select id="td-slot" required class="w-full bg-auto-surface border border-auto-border focus:border-rose-500 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none">
+                            <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+                            <option value="11:30 AM - 12:30 PM">11:30 AM - 12:30 PM</option>
+                            <option value="02:30 PM - 03:30 PM">02:30 PM - 03:30 PM</option>
+                            <option value="04:30 PM - 05:30 PM">04:30 PM - 05:30 PM</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="text-[11px] text-gray-400">
+                    <i class="fa-solid fa-shield-check text-emerald-400 mr-1"></i> Real-time slot conflict protection prevents overlapping bookings for the same car & slot.
+                </p>
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeModal('booking-modal')" class="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-bold text-gray-300">Cancel</button>
+                    <button type="submit" class="accent-btn px-6 py-2.5 rounded-xl text-sm font-bold text-white shadow-lg">Confirm Test Drive</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. Request Quotation / Finance Inquiry Modal -->
+    <div id="quote-modal" class="hidden fixed inset-0 z-[80] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-auto-card border border-auto-border rounded-3xl w-full max-w-lg p-6 sm:p-8 shadow-2xl animate-fade-in">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <span class="text-xs font-bold uppercase text-amber-400">Official Dealership Quote</span>
+                    <h3 id="quote-modal-title" class="font-display font-extrabold text-xl text-white">Request On-Road Quotation</h3>
+                </div>
+                <button onclick="closeModal('quote-modal')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="submitQuotationRequest(event)" class="space-y-4">
+                <input type="hidden" id="quote-car-id">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">Full Name *</label>
+                    <input type="text" id="quote-name" required value="Rohan Verma" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-sm text-white">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">Phone / WhatsApp *</label>
+                        <input type="tel" id="quote-phone" required value="+91 98765 43210" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-sm text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-400 mb-1">Purchase Mode</label>
+                        <select id="quote-finance" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-sm text-white">
+                            <option value="Auto Loan / EMI Financing">Auto Loan / EMI Financing</option>
+                            <option value="Full Outright Payment">Full Outright Payment</option>
+                            <option value="Corporate Lease / Exchange">Corporate Lease / Exchange</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">City & Registration RTO</label>
+                    <input type="text" id="quote-city" required value="Hyderabad / Vijayawada (AP/TS)" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-sm text-white">
+                </div>
+                <button type="submit" class="w-full gold-btn py-3 rounded-xl text-sm font-extrabold shadow-lg">Generate Pro-Forma Quotation</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. Authentication & Role Switcher Modal -->
+    <div id="auth-modal" class="hidden fixed inset-0 z-[80] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-auto-card border border-auto-border rounded-3xl w-full max-w-md p-6 sm:p-8 shadow-2xl animate-fade-in">
+            <div class="flex justify-between items-center mb-5">
+                <div class="flex gap-2 bg-auto-surface p-1 rounded-xl border border-auto-border">
+                    <button id="tab-login" onclick="switchAuthTab('login')" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-rose-600 text-white">Login</button>
+                    <button id="tab-register" onclick="switchAuthTab('register')" class="px-4 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white">Sign Up</button>
+                </div>
+                <button onclick="closeModal('auth-modal')" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div id="auth-name-field" class="hidden">
+                    <label class="block text-xs font-bold text-gray-400 mb-1">Full Name</label>
+                    <input type="text" id="auth-name" placeholder="Ananya Sharma" class="w-full bg-auto-surface border border-auto-border rounded-xl px-4 py-2.5 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">Email Address</label>
+                    <input type="email" id="auth-email" required placeholder="customer@autohub.in" class="w-full bg-auto-surface border border-auto-border rounded-xl px-4 py-2.5 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">Password</label>
+                    <input type="password" id="auth-password" required placeholder="••••••••" class="w-full bg-auto-surface border border-auto-border rounded-xl px-4 py-2.5 text-sm text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">Account Role (RBAC Demo)</label>
+                    <select id="auth-role" class="w-full bg-auto-surface border border-auto-border rounded-xl px-4 py-2.5 text-sm text-white">
+                        <option value="customer">Customer</option>
+                        <option value="sales_exec">Sales Executive</option>
+                        <option value="showroom_manager">Showroom Manager</option>
+                        <option value="admin">Platform Administrator</option>
+                    </select>
+                </div>
+                <div class="flex justify-between text-xs">
+                    <button type="button" onclick="showToast('Password reset token sent to your verified email.', 'info')" class="text-rose-400 hover:underline">Forgot Password?</button>
+                    <button type="button" onclick="showToast('Email verification link resent!', 'success')" class="text-amber-400 hover:underline">Verify Email</button>
+                </div>
+                <button type="submit" id="auth-submit-btn" class="w-full accent-btn py-3 rounded-xl text-sm font-bold text-white shadow-lg">Sign In to AUTOHUB</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== APPLICATION STATE & LOGIC ==================== -->
+    <script>
+        /**
+         * AUTOHUB ENTERPRISE DATA STORE
+         * Models normalized relational database tables:
+         * users, brands, cars, showrooms, showroom_inventory, test_drive_bookings,
+         * favorites, comparisons, quotations, reviews, and activity_logs.
+         */
+        const BRANDS = [
+            { id: 'tata', name: 'Tata Motors', origin: 'India', segment: 'Mass & EV Leader', startingPrice: '₹5.65 Lakh', offer: 'Exchange Bonus up to ₹45,000 + Free 3-Yr AMC', desc: 'India’s pioneer in 5-star GNCAP safety-rated SUVs and market-leading electric vehicles.' },
+            { id: 'mahindra', name: 'Mahindra', origin: 'India', segment: 'Authentic SUVs', startingPrice: '₹7.99 Lakh', offer: 'Priority Delivery Slots & Corporate Shield Package', desc: 'Renowned for rugged body-on-frame and monocoque SUVs with commanding road presence.' },
+            { id: 'maruti', name: 'Maruti Suzuki', origin: 'India / Japan', segment: 'Hatchbacks & Hybrids', startingPrice: '₹3.99 Lakh', offer: 'Zero Down-Payment Schemes + Extended 5-Yr Warranty', desc: 'India’s largest passenger vehicle maker delivering unmatched fuel efficiency and service reach.' },
+            { id: 'hyundai', name: 'Hyundai', origin: 'South Korea', segment: 'Tech-Forward Mobility', startingPrice: '₹5.92 Lakh', offer: 'Complimentary Bluelink Subscription + Low ROI 7.99%', desc: 'Global innovator known for feature-rich cabins, ADAS safety suites, and refined powertrains.' },
+            { id: 'kia', name: 'Kia', origin: 'South Korea', segment: 'Design & Connected Cars', startingPrice: '₹7.99 Lakh', offer: 'Free 3-Year MyConvenience Maintenance Pack', desc: 'Bold tiger-nose styling paired with segment-leading connected technology and performance.' },
+            { id: 'toyota', name: 'Toyota', origin: 'Japan', segment: 'Hybrids & Reliability', startingPrice: '₹6.86 Lakh', offer: '8-Year Hybrid Battery Warranty & Loyalty Benefits', desc: 'World benchmark for bullet-proof durability, strong self-charging hybrids, and off-road legends.' },
+            { id: 'honda', name: 'Honda', origin: 'Japan', segment: 'Refined Sedans & SUVs', startingPrice: '₹7.20 Lakh', offer: '10-Year Anytime Warranty Eligibility', desc: 'Celebrated for i-VTEC engines, Honda Sensing ADAS, and spacious executive sedans.' },
+            { id: 'volkswagen', name: 'Volkswagen', origin: 'Germany', segment: 'German Engineering', startingPrice: '₹11.56 Lakh', offer: '4-Year Service Value Package Included', desc: 'Precision TSI turbocharged performance built on the 5-star rated MQB-A0-IN platform.' },
+            { id: 'skoda', name: 'Skoda', origin: 'Czech Republic', segment: 'European Dynamics', startingPrice: '₹10.89 Lakh', offer: 'Complimentary 4-Year Skoda SuperCare', desc: 'Simply Clever ergonomics combined with razor-sharp European chassis dynamics.' },
+            { id: 'bmw', name: 'BMW', origin: 'Germany', segment: 'Luxury Performance', startingPrice: '₹43.90 Lakh', offer: 'BMW 360° Buyback Assurance & BSI Plus', desc: 'The Ultimate Driving Machine — blending rear-wheel-drive athleticism with modern luxury.' },
+            { id: 'mercedes', name: 'Mercedes-Benz', origin: 'Germany', segment: 'Flagship Luxury', startingPrice: '₹46.05 Lakh', offer: 'Star Agility+ Flexible Ownership Plan', desc: 'The inventors of the automobile, setting the global standard for opulence and safety.' },
+            { id: 'audi', name: 'Audi', origin: 'Germany', segment: 'Progressive Luxury', startingPrice: '₹44.99 Lakh', offer: '5-Year Comprehensive Service & Quattro Benefit', desc: 'Vorsprung durch Technik — progressive design, virtual cockpits, and Quattro all-wheel drive.' },
+            { id: 'porsche', name: 'Porsche', origin: 'Germany', segment: 'Iconic Sports Cars', startingPrice: '₹96.05 Lakh', offer: 'Bespoke Porsche Exclusive Manufaktur Consultation', desc: 'Motorsport-bred precision sports cars and high-performance luxury SUVs.' },
+            { id: 'tesla', name: 'Tesla', origin: 'USA', segment: 'Autonomous Electric', startingPrice: '$38,990 (Est.)', offer: 'Complimentary Supercharging Credits on Select Orders', desc: 'Global electric vehicle pioneer with industry-leading range, Autopilot, and OTA software.' }
+        ];
+
+        const SHOWROOMS = [
+            { id: 'sh_1', name: 'AUTOHUB Flagship Arena — Hyderabad', city: 'Hyderabad', address: 'Plot 42, Jubilee Hills Road No. 36, Hyderabad', phone: '+91 40 2355 8900', manager: 'Vikramaditya Rao', hours: '09:30 AM – 08:30 PM', coords: '17.4326° N, 78.4071° E' },
+            { id: 'sh_2', name: 'AUTOHUB Signature Gallery — Bengaluru', city: 'Bengaluru', address: '100 Feet Road, Indiranagar, Bengaluru', phone: '+91 80 4122 7700', manager: 'Meera Krishnan', hours: '10:00 AM – 08:30 PM', coords: '12.9784° N, 77.6408° E' },
+            { id: 'sh_3', name: 'AUTOHUB Luxe Boulevard — Mumbai', city: 'Mumbai', address: 'Worli Sea Face, Annie Besant Road, Mumbai', phone: '+91 22 6610 4400', manager: 'Kabir Malhotra', hours: '10:00 AM – 09:00 PM', coords: '19.0176° N, 72.8150° E' }
+        ];
+
+        // Verified Sample Showroom Inventory (Clearly labeled with manufacturer specs & estimated prices)
+        const CARS_DB = [
+            {
+                id: 'CAR-101', brand: 'Tata Motors', brandId: 'tata', model: 'Nexon.ev', variant: 'Empowered+ LR',
+                year: 2025, condition: 'New', category: 'Electric vehicle', fuel: 'Electric', transmission: 'Automatic',
+                exShowroomINR: 1949000, onRoadEstINR: 2065000, priceDisplay: '₹19.49 Lakh',
+                engine: '40.5 kWh High-Density Li-Ion', power: '143 bhp', torque: '215 Nm',
+                mileage: '465 km (ARAI Range)', seating: 5, bootSpace: '350 L', groundClearance: '190 mm',
+                safetyRating: '5-Star Bharat NCAP', airbags: 6, warranty: '8 Yr / 1.6L km Battery',
+                stock: 6, status: 'Available', showroomId: 'sh_1', rating: 4.8, isTrending: true, isLatest: true,
+                image: 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1000&q=80'
+                ],
+                features: ['12.3-inch Harman Touchscreen', '360° Surround View Camera', 'V2L & V2V Charging', 'Ventilated Front Seats', '6 Airbags & ESP']
+            },
+            {
+                id: 'CAR-102', brand: 'Mahindra', brandId: 'mahindra', model: 'XUV700', variant: 'AX7 Luxury Pack AWD',
+                year: 2025, condition: 'New', category: 'SUV', fuel: 'Diesel', transmission: 'Automatic',
+                exShowroomINR: 2499000, onRoadEstINR: 2940000, priceDisplay: '₹24.99 Lakh',
+                engine: '2198 cc mHawk Turbo Diesel', power: '182 bhp @ 3500 rpm', torque: '450 Nm @ 1750 rpm',
+                mileage: '16.5 kmpl', seating: 7, bootSpace: '240 L (3rd row up)', groundClearance: '200 mm',
+                safetyRating: '5-Star Global NCAP', airbags: 7, warranty: '3 Yr / Unlimited km',
+                stock: 4, status: 'Available', showroomId: 'sh_1', rating: 4.9, isTrending: true, isLatest: false,
+                image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80'
+                ],
+                features: ['Level-2 ADAS Suite', 'Dual 10.25-inch HD Superscreen', 'Sony 12-Speaker 3D Audio', 'Skyroof Panoramic Sunroof', 'All-Wheel Drive']
+            },
+            {
+                id: 'CAR-103', brand: 'BMW', brandId: 'bmw', model: 'M340i xDrive', variant: '50 Jahre M Edition',
+                year: 2025, condition: 'New', category: 'Luxury', fuel: 'Petrol', transmission: 'Automatic',
+                exShowroomINR: 7290000, onRoadEstINR: 8580000, priceDisplay: '₹72.90 Lakh',
+                engine: '2998 cc TwinPower Turbo Inline-6', power: '374 bhp @ 5500 rpm', torque: '500 Nm @ 1900 rpm',
+                mileage: '13.02 kmpl', seating: 5, bootSpace: '480 L', groundClearance: '130 mm',
+                safetyRating: '5-Star Euro NCAP', airbags: 6, warranty: '2 Yr / Unlimited km (BSI Optional)',
+                stock: 2, status: 'Available', showroomId: 'sh_3', rating: 4.9, isTrending: true, isLatest: true,
+                image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1000&q=80',
+                    'https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&w=1000&q=80'
+                ],
+                features: ['0-100 km/h in 4.4 Seconds', 'M Sport Differential & Adaptive Suspension', 'BMW Curved Display OS 8.5', 'Harman Kardon Surround Sound', 'xDrive Intelligent AWD']
+            },
+            {
+                id: 'CAR-104', brand: 'Hyundai', brandId: 'hyundai', model: 'Creta', variant: 'SX (O) 1.5 Turbo DCT',
+                year: 2025, condition: 'New', category: 'SUV', fuel: 'Petrol', transmission: 'Automatic',
+                exShowroomINR: 2015000, onRoadEstINR: 2360000, priceDisplay: '₹20.15 Lakh',
+                engine: '1482 cc Kappa Turbo GDi', power: '158 bhp @ 5500 rpm', torque: '253 Nm @ 1500 rpm',
+                mileage: '18.4 kmpl', seating: 5, bootSpace: '433 L', groundClearance: '190 mm',
+                safetyRating: 'Hyundai SmartSense ADAS', airbags: 6, warranty: '3 Yr / Unlimited km',
+                stock: 8, status: 'Available', showroomId: 'sh_2', rating: 4.7, isTrending: true, isLatest: true,
+                image: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=1000&q=80'
+                ],
+                features: ['Level-2 ADAS (19 Features)', 'Dual-Zone Automatic Climate Control', 'Bose 8-Speaker Sound System', 'Voice-Enabled Panoramic Sunroof', 'Ventilated Front Seats']
+            },
+            {
+                id: 'CAR-105', brand: 'Maruti Suzuki', brandId: 'maruti', model: 'Swift', variant: 'ZXi+ AGS',
+                year: 2025, condition: 'New', category: 'Hatchback', fuel: 'Petrol', transmission: 'Automatic',
+                exShowroomINR: 949000, onRoadEstINR: 1085000, priceDisplay: '₹9.49 Lakh',
+                engine: '1197 cc Z12E 3-Cylinder', power: '80 bhp @ 5700 rpm', torque: '111.7 Nm @ 4300 rpm',
+                mileage: '25.75 kmpl', seating: 5, bootSpace: '265 L', groundClearance: '163 mm',
+                safetyRating: '6 Airbags Standard', airbags: 6, warranty: '2 Yr / 40,000 km',
+                stock: 12, status: 'Available', showroomId: 'sh_1', rating: 4.6, isTrending: false, isLatest: true,
+                image: 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1000&q=80'
+                ],
+                features: ['25.75 kmpl Segment-Best Mileage', '9-inch SmartPlay Pro+ Infotainment', 'Wireless Apple CarPlay & Android Auto', '6 Airbags & Hill Hold Assist', 'Arkamys Surround Sense']
+            },
+            {
+                id: 'CAR-106', brand: 'Toyota', brandId: 'toyota', model: 'Camry', variant: '2.5 Hybrid Elegant',
+                year: 2025, condition: 'New', category: 'Sedan', fuel: 'Hybrid', transmission: 'Automatic',
+                exShowroomINR: 4800000, onRoadEstINR: 5640000, priceDisplay: '₹48.00 Lakh',
+                engine: '2487 cc Dynamic Force Hybrid', power: '227 bhp (Combined)', torque: '221 Nm',
+                mileage: '25.49 kmpl', seating: 5, bootSpace: '524 L', groundClearance: '160 mm',
+                safetyRating: '5-Star ANCAP / TSS 3.0', airbags: 9, warranty: '8 Yr Hybrid Battery',
+                stock: 3, status: 'Available', showroomId: 'sh_2', rating: 4.8, isTrending: false, isLatest: true,
+                image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=1000&q=80'
+                ],
+                features: ['Self-Charging Strong Hybrid', 'Rear Reclining Executive Seats', '3-Zone Automatic Climate Control', 'Toyota Safety Sense 3.0 ADAS', 'JBL 9-Speaker Clari-Fi Audio']
+            },
+            {
+                id: 'CAR-107', brand: 'Porsche', brandId: 'porsche', model: '911 Carrera', variant: '992.2 Coupe PDK',
+                year: 2025, condition: 'New', category: 'Sports car', fuel: 'Petrol', transmission: 'Automatic',
+                exShowroomINR: 19890000, onRoadEstINR: 23200000, priceDisplay: '₹1.99 Cr',
+                engine: '2981 cc Twin-Turbo Boxer-6', power: '394 bhp @ 6500 rpm', torque: '450 Nm @ 2000 rpm',
+                mileage: '9.8 kmpl', seating: 4, bootSpace: '132 L (Frunk)', groundClearance: '109 mm',
+                safetyRating: 'Porsche Wet Mode & PSM', airbags: 6, warranty: '2 Yr / Unlimited km',
+                stock: 1, status: 'Reserved', showroomId: 'sh_3', rating: 5.0, isTrending: true, isLatest: true,
+                image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=80'
+                ],
+                features: ['8-Speed Porsche Doppelkupplung (PDK)', '0-100 km/h in 3.9s (Sport Chrono)', 'PASM Adaptive Dampers', 'HD-Matrix LED Headlights', 'Full Digital Curved Instrument Cluster']
+            },
+            {
+                id: 'CAR-108', brand: 'Mercedes-Benz', brandId: 'mercedes', model: 'C-Class C220d', variant: 'AMG Line (Certified Used - 14,200 km)',
+                year: 2023, condition: 'Certified Used', category: 'Luxury', fuel: 'Diesel', transmission: 'Automatic',
+                exShowroomINR: 4650000, onRoadEstINR: 4890000, priceDisplay: '₹46.50 Lakh',
+                engine: '1993 cc OM654 Mild-Hybrid Diesel', power: '200 bhp @ 3600 rpm', torque: '440 Nm @ 1800 rpm',
+                mileage: '23.0 kmpl', seating: 5, bootSpace: '455 L', groundClearance: '135 mm',
+                safetyRating: '5-Star Euro NCAP (150-Pt Certified)', airbags: 7, warranty: '2 Yr AUTOHUB Certified Warranty',
+                stock: 1, status: 'Available', showroomId: 'sh_3', rating: 4.8, isTrending: false, isLatest: false,
+                image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1000&q=80'
+                ],
+                features: ['150-Point Multi-Stage Inspection Passed', 'Single Owner • Full Service History', '11.9-inch Portrait MBUX OLED Screen', '64-Color Ambient Lighting', 'Burmester 3D Surround Sound']
+            },
+            {
+                id: 'CAR-109', brand: 'Honda', brandId: 'honda', model: 'City e:HEV', variant: 'ZX Hybrid (Certified Used - 18,500 km)',
+                year: 2023, condition: 'Certified Used', category: 'Sedan', fuel: 'Hybrid', transmission: 'Automatic',
+                exShowroomINR: 1575000, onRoadEstINR: 1650000, priceDisplay: '₹15.75 Lakh',
+                engine: '1498 cc Atkinson Cycle i-MMD Hybrid', power: '126 bhp (Combined)', torque: '253 Nm (Electric Motor)',
+                mileage: '27.13 kmpl', seating: 5, bootSpace: '410 L', groundClearance: '165 mm',
+                safetyRating: 'Honda Sensing ADAS + 6 Airbags', airbags: 6, warranty: '1 Yr Comprehensive Certified',
+                stock: 2, status: 'Available', showroomId: 'sh_1', rating: 4.7, isTrending: false, isLatest: false,
+                image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80',
+                gallery: [
+                    'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80'
+                ],
+                features: ['27.13 kmpl Real-World Efficiency', 'Collision Mitigation Braking System', 'LaneWatch Blind Spot Camera', 'Certified Accident-Free History', 'Zero-Down EMI Eligible']
+            }
+        ];
+
+        const STATE = {
+            currentView: 'home',
+            viewParams: {},
+            user: {
+                id: 'USR-8841',
+                name: 'Rohan Verma',
+                email: 'rohan.verma@example.com',
+                role: 'customer', // 'customer', 'sales_exec', 'showroom_manager', 'admin'
+                phone: '+91 98765 43210'
+            },
+            isAuthenticated: true,
+            favorites: ['CAR-101', 'CAR-103'],
+            recentlyViewed: ['CAR-102', 'CAR-101'],
+            compareIds: ['CAR-101', 'CAR-102'],
+            bookings: [
+                { id: 'TD-2026-9041', customerName: 'Rohan Verma', email: 'rohan.verma@example.com', phone: '+91 98765 43210', carId: 'CAR-102', showroomId: 'sh_1', date: '2026-11-28', slot: '11:30 AM - 12:30 PM', status: 'Confirmed' },
+                { id: 'TD-2026-9042', customerName: 'Sneha Reddy', email: 'sneha@example.com', phone: '+91 91234 56789', carId: 'CAR-101', showroomId: 'sh_1', date: '2026-11-29', slot: '02:30 PM - 03:30 PM', status: 'Pending Approval' }
+            ],
+            quotations: [
+                { id: 'QT-7712', carId: 'CAR-101', customerName: 'Rohan Verma', city: 'Hyderabad', financeMode: 'Auto Loan / EMI Financing', estTotal: '₹20.65 Lakh', status: 'Sent by Sales Exec' }
+            ],
+            reviews: [
+                { id: 'REV-1', carId: 'CAR-102', userName: 'Karthik Rao', rating: 5, comment: 'Took delivery of XUV700 AX7L from AUTOHUB Hyderabad. Seamless paperwork and transparent on-road breakdown!', date: '2026-11-12' },
+                { id: 'REV-2', carId: 'CAR-101', userName: 'Ananya Deshmukh', rating: 5, comment: 'Nexon.ev range easily crosses 360 km in city traffic. The test drive booking slot was honored on the dot.', date: '2026-11-19' }
+            ],
+            activityLogs: [
+                { time: 'Just now', msg: 'AUTOHUB Inventory & Booking Engine initialized (9 verified vehicles live)' },
+                { time: '12 mins ago', msg: 'Booking TD-2026-9041 confirmed for Mahindra XUV700 at Hyderabad Arena' },
+                { time: '40 mins ago', msg: 'Quotation QT-7712 generated for Tata Nexon.ev Empowered+ LR' }
+            ]
+        };
+
+        // ==================== HELPER FUNCTIONS ====================
+        function formatINR(num) {
+            if (!num) return 'N/A';
+            if (num >= 10000000) return '₹' + (num / 10000000).toFixed(2) + ' Cr';
+            return '₹' + (num / 100000).toFixed(2) + ' Lakh';
+        }
+
+        function handleImgFallback(img, label = 'AUTOHUB') {
+            img.onerror = null;
+            img.src = `https://placehold.co/900x550/17171f/f59e0b?text=${encodeURIComponent(label)}`;
+        }
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const styles = {
+                info: 'border-amber-500/60 bg-auto-card text-white',
+                success: 'border-emerald-500/60 bg-auto-card text-emerald-300',
+                error: 'border-rose-500/60 bg-auto-card text-rose-300'
+            };
+            const icons = {
+                info: 'fa-circle-info text-amber-400',
+                success: 'fa-circle-check text-emerald-400',
+                error: 'fa-triangle-exclamation text-rose-500'
+            };
+            const el = document.createElement('div');
+            el.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl border shadow-2xl text-xs sm:text-sm font-medium animate-fade-in ${styles[type]}`;
+            el.innerHTML = `<i class="fa-solid ${icons[type]}"></i><span>${message}</span>`;
+            container.appendChild(el);
+            setTimeout(() => {
+                el.style.opacity = '0';
+                el.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => el.remove(), 300);
+            }, 3200);
+        }
+
+        function logAudit(msg) {
+            STATE.activityLogs.unshift({ time: 'Just now', msg });
+        }
+
+        // ==================== ROUTING ====================
+        function navigate(view, params = {}) {
+            STATE.currentView = view;
+            STATE.viewParams = params;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            document.querySelectorAll('.nav-link').forEach(btn => {
+                btn.classList.remove('text-white', 'bg-white/10');
+                btn.classList.add('text-gray-300');
+            });
+            const navKey = view === 'explore' ? (params.condition === 'New' ? 'new' : (params.condition === 'Certified Used' ? 'used' : 'explore')) : view;
+            const active = document.querySelector(`[data-nav="${navKey}"]`);
+            if (active) {
+                active.classList.add('text-white', 'bg-white/10');
+                active.classList.remove('text-gray-300');
+            }
+
+            renderApp();
+        }
+
+        function renderApp() {
+            const root = document.getElementById('app-root');
+            switch (STATE.currentView) {
+                case 'home': renderHome(root); break;
+                case 'explore': renderExplore(root, STATE.viewParams); break;
+                case 'details': renderCarDetails(root, STATE.viewParams); break;
+                case 'brands': renderBrands(root, STATE.viewParams); break;
+                case 'compare': renderCompare(root); break;
+                case 'services': renderServices(root); break;
+                case 'dashboard': renderDashboard(root); break;
+                case 'contact': renderContact(root); break;
+                case 'about': renderAbout(root); break;
+                default: renderHome(root);
+            }
+        }
+
+        // ==================== REUSABLE PREMIUM VEHICLE CARD ====================
+        function renderCarCard(car) {
+            const isFav = STATE.favorites.includes(car.id);
+            const isComp = STATE.compareIds.includes(car.id);
+            const showroom = SHOWROOMS.find(s => s.id === car.showroomId);
+            const statusColor = car.status === 'Available' ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+
+            return `
+                <div class="group bg-auto-card border border-auto-border rounded-3xl overflow-hidden car-card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="relative aspect-[16/10] overflow-hidden bg-auto-surface cursor-pointer" onclick="navigate('details', {id: '${car.id}'})">
+                            <img src="${car.image}" alt="${car.brand} ${car.model}" loading="lazy" onerror="handleImgFallback(this, '${car.brand} ${car.model}')" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-auto-card via-transparent to-black/30"></div>
+
+                            <!-- Condition & Status Badges -->
+                            <div class="absolute top-3 left-3 flex items-center gap-1.5">
+                                <span class="px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider ${car.condition === 'New' ? 'bg-rose-600 text-white' : 'bg-amber-500 text-black'}">
+                                    ${car.condition}
+                                </span>
+                                <span class="px-2 py-1 rounded-lg text-[10px] font-bold border backdrop-blur-md ${statusColor}">
+                                    ${car.status} (${car.stock})
+                                </span>
+                            </div>
+
+                            <!-- Favorite & Compare Quick Triggers -->
+                            <div class="absolute top-3 right-3 flex flex-col gap-1.5">
+                                <button onclick="event.stopPropagation(); toggleFavorite('${car.id}')" title="Save to Favorites" class="w-8 h-8 rounded-xl backdrop-blur-md border border-white/15 flex items-center justify-center transition ${isFav ? 'bg-rose-600 text-white' : 'bg-black/65 text-gray-200 hover:bg-rose-600'}">
+                                    <i class="fa-solid fa-heart text-xs"></i>
+                                </button>
+                                <button onclick="event.stopPropagation(); toggleCompare('${car.id}')" title="Add to Compare" class="w-8 h-8 rounded-xl backdrop-blur-md border border-white/15 flex items-center justify-center transition ${isComp ? 'bg-amber-500 text-black' : 'bg-black/65 text-gray-200 hover:bg-amber-500 hover:text-black'}">
+                                    <i class="fa-solid fa-code-compare text-xs"></i>
+                                </button>
+                            </div>
+
+                            <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-[11px] text-gray-200">
+                                <span class="bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md"><i class="fa-solid fa-gas-pump text-rose-400 mr-1"></i>${car.fuel}</span>
+                                <span class="bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md"><i class="fa-solid fa-gears text-amber-400 mr-1"></i>${car.transmission}</span>
+                            </div>
+                        </div>
+
+                        <div class="p-5">
+                            <div class="flex items-center justify-between text-xs text-gray-400 mb-1">
+                                <span class="font-bold uppercase tracking-wider text-rose-400">${car.brand}</span>
+                                <span class="text-amber-400 font-bold"><i class="fa-solid fa-star mr-1"></i>${car.rating}</span>
+                            </div>
+                            <h3 onclick="navigate('details', {id: '${car.id}'})" class="font-display font-extrabold text-lg text-white group-hover:text-rose-400 transition cursor-pointer line-clamp-1">
+                                ${car.model} <span class="text-xs font-medium text-gray-400">${car.variant}</span>
+                            </h3>
+
+                            <!-- Key Spec Pills -->
+                            <div class="grid grid-cols-3 gap-2 my-3.5 text-center bg-auto-surface border border-auto-border rounded-2xl p-2.5 text-[11px]">
+                                <div>
+                                    <span class="text-gray-500 block">Power</span>
+                                    <span class="font-bold text-gray-200">${car.power.split('@')[0]}</span>
+                                </div>
+                                <div class="border-x border-auto-border">
+                                    <span class="text-gray-500 block">Efficiency</span>
+                                    <span class="font-bold text-gray-200">${car.mileage.split(' ')[0]} ${car.fuel === 'Electric' ? 'km' : 'kmpl'}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-500 block">Seats</span>
+                                    <span class="font-bold text-gray-200">${car.seating} Seater</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-baseline justify-between">
+                                <div>
+                                    <span class="text-[10px] uppercase text-gray-400 block">Ex-Showroom Price</span>
+                                    <span class="font-display font-extrabold text-xl text-white">${car.priceDisplay}</span>
+                                </div>
+                                <span class="text-[11px] text-gray-400 truncate max-w-[130px]" title="${showroom?.name || ''}">
+                                    <i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>${showroom?.city || 'India'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-5 pb-5 pt-2 flex items-center gap-2">
+                        <button onclick="navigate('details', {id: '${car.id}'})" class="flex-1 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition">
+                            Specs & Details
+                        </button>
+                        <button onclick="openBookingModal('${car.id}')" class="flex-1 accent-btn py-2.5 rounded-xl text-xs font-bold text-white shadow">
+                            Test Drive
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==================== 1. HOMEPAGE VIEW ====================
+        function renderHome(root) {
+            const heroCar = CARS_DB[2]; // BMW M340i
+            const trending = CARS_DB.filter(c => c.isTrending);
+            const latest = CARS_DB.filter(c => c.isLatest);
+            const luxury = CARS_DB.filter(c => ['Luxury', 'Sports car'].includes(c.category));
+            const evs = CARS_DB.filter(c => c.fuel === 'Electric' || c.fuel === 'Hybrid');
+            const suvs = CARS_DB.filter(c => c.category === 'SUV');
+            const sedansAndHatch = CARS_DB.filter(c => ['Sedan', 'Hatchback'].includes(c.category));
+            const budgetCars = CARS_DB.filter(c => c.exShowroomINR <= 2100000);
+
+            root.innerHTML = `
+                <div class="animate-fade-in">
+                    <!-- FULL-WIDTH LUXURY HERO SECTION -->
+                    <section class="relative min-h-[78vh] flex items-center overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&w=1800&q=85" alt="Luxury Sports Car" class="absolute inset-0 w-full h-full object-cover object-center" />
+                        <div class="absolute inset-0 hero-gradient"></div>
+
+                        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12">
+                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                                <div class="lg:col-span-7 space-y-5">
+                                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-600/20 border border-rose-500/40 text-rose-300 text-xs font-bold uppercase tracking-wider">
+                                        <i class="fa-solid fa-crown text-amber-400"></i> Your Dream Car. Your Journey Starts Here.
+                                    </div>
+                                    <h1 class="font-display font-extrabold text-4xl sm:text-6xl text-white tracking-tight leading-tight">
+                                        Find Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-400">Perfect Drive.</span>
+                                    </h1>
+                                    <p class="text-gray-300 text-base sm:text-lg max-w-xl leading-relaxed">
+                                        Explore verified new & certified pre-owned vehicles across 14 global brands, compare real-time showroom inventory, calculate instant EMIs, and schedule doorstep test drives.
+                                    </p>
+                                    <div class="flex flex-wrap items-center gap-3.5 pt-2">
+                                        <button onclick="navigate('explore', {})" class="accent-btn px-7 py-3.5 rounded-2xl text-sm font-bold text-white flex items-center gap-2 shadow-xl">
+                                            <i class="fa-solid fa-car-side"></i> Explore Cars
+                                        </button>
+                                        <button onclick="openBookingModal()" class="gold-btn px-7 py-3.5 rounded-2xl text-sm font-extrabold flex items-center gap-2 shadow-xl">
+                                            <i class="fa-solid fa-calendar-check"></i> Book Test Drive
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Featured Spotlight Card -->
+                                <div class="lg:col-span-5 bg-auto-card/85 backdrop-blur-xl border border-white/10 rounded-3xl p-5 shadow-2xl">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400">Featured Showroom Highlight</span>
+                                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold">In Stock</span>
+                                    </div>
+                                    <img src="${heroCar.image}" alt="${heroCar.model}" class="w-full h-48 object-cover rounded-2xl mb-4" />
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h3 class="font-display font-extrabold text-xl text-white">${heroCar.brand} ${heroCar.model}</h3>
+                                            <p class="text-xs text-gray-400">${heroCar.power} &bull; 0-100 km/h in 4.4s &bull; ${heroCar.priceDisplay}</p>
+                                        </div>
+                                        <button onclick="navigate('details', {id: '${heroCar.id}'})" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-rose-600 text-xs font-bold text-white transition">
+                                            Inspect &rarr;
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- QUICK CATEGORY & SEARCH BAR -->
+                    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+                        <div class="bg-auto-card border border-auto-border rounded-3xl p-4 sm:p-6 shadow-2xl grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+                            ${[
+                                { label: 'SUVs', cat: 'SUV', icon: 'fa-truck-monster' },
+                                { label: 'Sedans', cat: 'Sedan', icon: 'fa-car' },
+                                { label: 'Hatchbacks', cat: 'Hatchback', icon: 'fa-car-side' },
+                                { label: 'Electric (EV)', cat: 'Electric vehicle', icon: 'fa-bolt' },
+                                { label: 'Luxury', cat: 'Luxury', icon: 'fa-gem' },
+                                { label: 'Sports Cars', cat: 'Sports car', icon: 'fa-flag-checkered' },
+                                { label: 'Budget Picks', maxP: 2100000, icon: 'fa-tags' },
+                                { label: 'AI Car Finder', isAi: true, icon: 'fa-robot' }
+                            ].map(item => `
+                                <button onclick="${item.isAi ? "navigate('services')" : (item.maxP ? `navigate('explore', {maxPrice: ${item.maxP}})` : `navigate('explore', {category: '${item.cat}'})`)}" class="p-3 rounded-2xl bg-auto-surface hover:bg-rose-600/20 border border-auto-border hover:border-rose-500/60 text-center transition group">
+                                    <i class="fa-solid ${item.icon} text-rose-500 group-hover:text-amber-400 text-base mb-1.5 block"></i>
+                                    <span class="text-xs font-bold text-white block">${item.label}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </section>
+
+                    <!-- MAIN CATALOG SECTIONS -->
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 mt-14">
+
+                        <!-- 1. Trending & Latest Launches -->
+                        <section>
+                            <div class="flex items-end justify-between mb-6">
+                                <div>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-rose-500">Hot in Showrooms</span>
+                                    <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Trending Cars & Latest Launches</h2>
+                                </div>
+                                <button onclick="navigate('explore', {})" class="text-xs sm:text-sm font-bold text-amber-400 hover:underline">View Full Catalog &rarr;</button>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                ${trending.slice(0, 3).map(renderCarCard).join('')}
+                            </div>
+                        </section>
+
+                        <!-- 2. Luxury, Sports & Electric Showcase -->
+                        <section>
+                            <div class="flex items-end justify-between mb-6">
+                                <div>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Performance & Future Mobility</span>
+                                    <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Luxury, Electric & Hybrid Lineup</h2>
+                                </div>
+                                <button onclick="navigate('explore', {fuel: 'Electric'})" class="text-xs sm:text-sm font-bold text-rose-400 hover:underline">Explore EVs &rarr;</button>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                ${[...evs, ...luxury].slice(0, 3).map(renderCarCard).join('')}
+                            </div>
+                        </section>
+
+                        <!-- 3. SUVs, Sedans, Hatchbacks & Budget Picks -->
+                        <section>
+                            <div class="flex items-end justify-between mb-6">
+                                <div>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-rose-500">Everyday & Family Favorites</span>
+                                    <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white">SUVs, Sedans & Budget-Friendly Cars</h2>
+                                </div>
+                                <button onclick="navigate('explore', {maxPrice: 2500000})" class="text-xs sm:text-sm font-bold text-amber-400 hover:underline">Under ₹25 Lakh &rarr;</button>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                ${[...suvs, ...sedansAndHatch, ...budgetCars].slice(0, 3).map(renderCarCard).join('')}
+                            </div>
+                        </section>
+
+                        <!-- 4. POPULAR BRANDS DIRECTORY (14 BRANDS) -->
+                        <section class="bg-auto-card border border-auto-border rounded-3xl p-6 sm:p-8">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                                <div>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Multi-Brand Marketplace</span>
+                                    <h2 class="font-display font-extrabold text-2xl text-white">Explore 14 Leading Automotive Brands</h2>
+                                </div>
+                                <button onclick="navigate('brands')" class="accent-btn px-5 py-2.5 rounded-xl text-xs font-bold text-white self-start">All Brand Pages &rarr;</button>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+                                ${BRANDS.map(b => `
+                                    <button onclick="navigate('brands', {brandId: '${b.id}'})" class="p-3.5 rounded-2xl bg-auto-surface hover:bg-white/10 border border-auto-border hover:border-rose-500/60 text-center transition">
+                                        <span class="font-display font-extrabold text-xs text-white block">${b.name}</span>
+                                        <span class="text-[10px] text-gray-400 mt-0.5 block">From ${b.startingPrice}</span>
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </section>
+
+                        <!-- 5. FEATURED SHOWROOMS & VERIFIED CUSTOMER REVIEWS -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <section class="bg-auto-card border border-auto-border rounded-3xl p-6">
+                                <span class="text-xs font-bold uppercase text-rose-500">Experience Centers</span>
+                                <h3 class="font-display font-extrabold text-xl text-white mt-1 mb-4">Featured AUTOHUB Showrooms</h3>
+                                <div class="space-y-3">
+                                    ${SHOWROOMS.map(sh => `
+                                        <div class="bg-auto-surface border border-auto-border rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                            <div>
+                                                <h4 class="font-display font-bold text-sm text-white">${sh.name}</h4>
+                                                <p class="text-xs text-gray-400 mt-0.5">${sh.address}</p>
+                                                <span class="text-[11px] text-amber-400 mt-1 inline-block"><i class="fa-solid fa-clock mr-1"></i>${sh.hours}</span>
+                                            </div>
+                                            <button onclick="openBookingModal()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-rose-600 text-xs font-bold text-white shrink-0 transition">
+                                                Book Visit
+                                            </button>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </section>
+
+                            <section class="bg-auto-card border border-auto-border rounded-3xl p-6">
+                                <span class="text-xs font-bold uppercase text-amber-400">Verified Delivery Stories</span>
+                                <h3 class="font-display font-extrabold text-xl text-white mt-1 mb-4">Customer Reviews</h3>
+                                <div class="space-y-3">
+                                    ${STATE.reviews.map(r => {
+                                        const car = CARS_DB.find(c => c.id === r.carId);
+                                        return `
+                                            <div class="bg-auto-surface border border-auto-border rounded-2xl p-4">
+                                                <div class="flex items-center justify-between mb-1">
+                                                    <span class="font-bold text-sm text-white">${r.userName}</span>
+                                                    <span class="text-xs font-bold text-amber-400">${'★'.repeat(r.rating)}</span>
+                                                </div>
+                                                <p class="text-xs text-rose-400 font-semibold mb-1">${car ? `${car.brand} ${car.model}` : 'Verified Buyer'}</p>
+                                                <p class="text-xs text-gray-300 leading-relaxed">"${r.comment}"</p>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==================== 2. ADVANCED CAR SEARCH & FILTER ENGINE ====================
+        function renderExplore(root, params = {}) {
+            const query = (params.query || '').toLowerCase();
+            const condition = params.condition || 'all';
+            const brandId = params.brandId || 'all';
+            const category = params.category || 'all';
+            const fuel = params.fuel || 'all';
+            const transmission = params.transmission || 'all';
+            const maxPrice = Number(params.maxPrice || 25000000);
+            const sort = params.sort || 'popular';
+
+            let filtered = CARS_DB.filter(car => {
+                if (condition !== 'all' && car.condition !== condition) return false;
+                if (brandId !== 'all' && car.brandId !== brandId) return false;
+                if (category !== 'all' && car.category !== category) return false;
+                if (fuel !== 'all' && car.fuel !== fuel) return false;
+                if (transmission !== 'all' && car.transmission !== transmission) return false;
+                if (car.exShowroomINR > maxPrice) return false;
+                if (query) {
+                    const hay = `${car.brand} ${car.model} ${car.variant} ${car.category} ${car.fuel}`.toLowerCase();
+                    if (!hay.includes(query)) return false;
+                }
+                return true;
+            });
+
+            if (sort === 'price_asc') filtered.sort((a, b) => a.exShowroomINR - b.exShowroomINR);
+            if (sort === 'price_desc') filtered.sort((a, b) => b.exShowroomINR - a.exShowroomINR);
+            if (sort === 'rating') filtered.sort((a, b) => b.rating - a.rating);
+
+            root.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Live Inventory Search</span>
+                            <h1 class="font-display font-extrabold text-3xl text-white">Explore Showroom Vehicles (${filtered.length})</h1>
+                        </div>
+                        <button onclick="navigate('explore', {})" class="px-4 py-2 rounded-xl bg-auto-card border border-auto-border hover:border-rose-500 text-xs font-bold text-gray-300 self-start">
+                            <i class="fa-solid fa-rotate-left mr-1.5"></i> Reset All Filters
+                        </button>
+                    </div>
+
+                    <!-- MULTI-PARAMETER FILTER PANEL -->
+                    <div class="bg-auto-card border border-auto-border rounded-3xl p-5 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-gray-400 mb-1">Search Keyword</label>
+                            <input type="text" id="exp-query" value="${params.query || ''}" placeholder="e.g., XUV700, Hybrid, BMW..." onchange="applyExploreFilters()" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3 py-2 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-gray-400 mb-1">Condition</label>
+                            <select id="exp-cond" onchange="applyExploreFilters()" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3 py-2 text-xs text-white">
+                                <option value="all" ${condition === 'all' ? 'selected' : ''}>All (New & Certified Used)</option>
+                                <option value="New" ${condition === 'New' ? 'selected' : ''}>Brand New Cars</option>
+                                <option value="Certified Used" ${condition === 'Certified Used' ? 'selected' : ''}>Certified Pre-Owned</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-gray-400 mb-1">Brand</label>
+                            <select id="exp-brand" onchange="applyExploreFilters()" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3 py-2 text-xs text-white">
+                                <option value="all">All 14 Brands</option>
+                                ${BRANDS.map(b => `<option value="${b.id}" ${brandId === b.id ? 'selected' : ''}>${b.name}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-gray-400 mb-1">Body Category</label>
+                            <select id="exp-cat" onchange="applyExploreFilters()" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3 py-2 text-xs text-white">
+                                <option value="all">All Categories</option>
+                                ${['Hatchback', 'Sedan', 'SUV', 'Luxury', 'Sports car', 'Electric vehicle'].map(c => `<option value="${c}" ${category === c ? 'selected' : ''}>${c}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-gray-400 mb-1">Fuel Type</label>
+                            <select id="exp-fuel" onchange="applyExploreFilters()" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3 py-2 text-xs text-white">
+                                <option value="all">All Fuel Types</option>
+                                ${['Petrol', 'Diesel', 'Electric', 'Hybrid', 'CNG'].map(f => `<option value="${f}" ${fuel === f ? 'selected' : ''}>${f}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-gray-400 mb-1">Transmission</label>
+                            <select id="exp-trans" onchange="applyExploreFilters()" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3 py-2 text-xs text-white">
+                                <option value="all">All Transmissions</option>
+                                <option value="Automatic" ${transmission === 'Automatic' ? 'selected' : ''}>Automatic (DCT / AT / AGS)</option>
+                                <option value="Manual" ${transmission === 'Manual' ? 'selected' : ''}>Manual</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-gray-400 mb-1">Max Budget: <span id="exp-price-lbl" class="text-amber-400">${formatINR(maxPrice)}</span></label>
+                            <input type="range" id="exp-price" min="800000" max="25000000" step="200000" value="${maxPrice}" oninput="document.getElementById('exp-price-lbl').innerText = formatINR(Number(this.value))" onchange="applyExploreFilters()" class="w-full accent-rose-600 mt-2">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold uppercase text-gray-400 mb-1">Sort By</label>
+                            <select id="exp-sort" onchange="applyExploreFilters()" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3 py-2 text-xs text-white">
+                                <option value="popular" ${sort === 'popular' ? 'selected' : ''}>Most Popular</option>
+                                <option value="price_asc" ${sort === 'price_asc' ? 'selected' : ''}>Price: Low to High</option>
+                                <option value="price_desc" ${sort === 'price_desc' ? 'selected' : ''}>Price: High to Low</option>
+                                <option value="rating" ${sort === 'rating' ? 'selected' : ''}>Highest Rated</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- RESULTS GRID -->
+                    ${filtered.length ? `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${filtered.map(renderCarCard).join('')}
+                        </div>
+                    ` : `
+                        <div class="bg-auto-card border border-auto-border rounded-3xl p-12 text-center">
+                            <i class="fa-solid fa-car-burst text-4xl text-gray-600 mb-3"></i>
+                            <h3 class="font-display font-bold text-xl text-white">No cars match those exact filters</h3>
+                            <p class="text-sm text-gray-400 mt-1 mb-5">Adjust your budget slider or reset filters to view all showroom vehicles.</p>
+                            <button onclick="navigate('explore', {})" class="accent-btn px-6 py-2.5 rounded-xl text-xs font-bold text-white">Show All Vehicles</button>
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        function applyExploreFilters() {
+            navigate('explore', {
+                query: document.getElementById('exp-query').value,
+                condition: document.getElementById('exp-cond').value,
+                brandId: document.getElementById('exp-brand').value,
+                category: document.getElementById('exp-cat').value,
+                fuel: document.getElementById('exp-fuel').value,
+                transmission: document.getElementById('exp-trans').value,
+                maxPrice: document.getElementById('exp-price').value,
+                sort: document.getElementById('exp-sort').value
+            });
+        }
+
+        // ==================== 3. DEDICATED CAR DETAILS PAGE ====================
+        function renderCarDetails(root, params) {
+            const car = CARS_DB.find(c => c.id === params.id) || CARS_DB[0];
+            if (!STATE.recentlyViewed.includes(car.id)) {
+                STATE.recentlyViewed.unshift(car.id);
+                STATE.recentlyViewed = STATE.recentlyViewed.slice(0, 6);
+            }
+            const showroom = SHOWROOMS.find(s => s.id === car.showroomId) || SHOWROOMS[0];
+            const isFav = STATE.favorites.includes(car.id);
+            const carReviews = STATE.reviews.filter(r => r.carId === car.id);
+
+            root.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+                    <button onclick="navigate('explore', {})" class="mb-6 inline-flex items-center gap-2 text-xs font-bold text-gray-300 hover:text-white bg-auto-card border border-auto-border px-4 py-2 rounded-xl">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Showroom Inventory
+                    </button>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- LEFT: HIGH-RES GALLERY -->
+                        <div class="lg:col-span-7 space-y-4">
+                            <div class="relative rounded-3xl overflow-hidden border border-auto-border bg-auto-card aspect-[16/10]">
+                                <img id="main-car-img" src="${car.image}" alt="${car.model}" onerror="handleImgFallback(this, '${car.brand} ${car.model}')" class="w-full h-full object-cover" />
+                                <span class="absolute top-4 left-4 px-3 py-1 rounded-xl bg-black/75 backdrop-blur-md text-xs font-bold text-amber-400 border border-white/10">
+                                    ID: ${car.id} &bull; ${car.year} Model
+                                </span>
+                            </div>
+                            <div class="flex gap-3 overflow-x-auto pb-1">
+                                ${car.gallery.map(imgUrl => `
+                                    <img src="${imgUrl}" onclick="document.getElementById('main-car-img').src='${imgUrl}'" class="w-28 h-20 rounded-2xl object-cover border-2 border-auto-border hover:border-rose-500 cursor-pointer transition" />
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: PRICING, INVENTORY & ACTION BUTTONS -->
+                        <div class="lg:col-span-5 bg-auto-card border border-auto-border rounded-3xl p-6 sm:p-7 flex flex-col justify-between space-y-6">
+                            <div class="space-y-4">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-3 py-1 rounded-lg bg-rose-600 text-white text-xs font-extrabold uppercase">${car.condition}</span>
+                                    <span class="px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold">${car.status} (${car.stock} Units)</span>
+                                    <span class="text-xs font-bold text-amber-400 ml-auto">★ ${car.rating} / 5.0</span>
+                                </div>
+
+                                <div>
+                                    <span class="text-xs font-bold uppercase tracking-wider text-rose-400">${car.brand}</span>
+                                    <h1 class="font-display font-extrabold text-3xl text-white">${car.model} ${car.variant}</h1>
+                                </div>
+
+                                <!-- Transparent Pricing Breakdown -->
+                                <div class="bg-auto-surface border border-auto-border rounded-2xl p-4 space-y-2">
+                                    <div class="flex justify-between items-baseline">
+                                        <span class="text-xs text-gray-400">Ex-Showroom Price:</span>
+                                        <span class="font-display font-extrabold text-2xl text-white">${car.priceDisplay}</span>
+                                    </div>
+                                    <div class="flex justify-between items-baseline border-t border-auto-border pt-2">
+                                        <span class="text-xs text-gray-400">Est. On-Road Price (RTO + Ins.):</span>
+                                        <span class="font-bold text-sm text-amber-400">${formatINR(car.onRoadEstINR)} *</span>
+                                    </div>
+                                    <p class="text-[10px] text-gray-500">*Manufacturer ex-showroom figure shown; on-road price varies by state RTO & insurance selection.</p>
+                                </div>
+
+                                <div class="text-xs text-gray-300 bg-auto-surface/60 border border-auto-border rounded-2xl p-3.5">
+                                    <p class="font-bold text-white mb-0.5"><i class="fa-solid fa-location-dot text-rose-500 mr-1.5"></i>Available at: ${showroom.name}</p>
+                                    <p class="text-gray-400">${showroom.address}</p>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Action Grid -->
+                            <div class="space-y-2.5">
+                                <div class="grid grid-cols-2 gap-2.5">
+                                    <button onclick="openBookingModal('${car.id}')" class="accent-btn py-3 rounded-xl text-xs sm:text-sm font-bold text-white shadow-lg">
+                                        <i class="fa-solid fa-steering-wheel mr-1.5"></i>Book Test Drive
+                                    </button>
+                                    <button onclick="openQuoteModal('${car.id}')" class="gold-btn py-3 rounded-xl text-xs sm:text-sm font-extrabold shadow-lg">
+                                        <i class="fa-solid fa-file-invoice-dollar mr-1.5"></i>Request Quote
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button onclick="toggleCompare('${car.id}')" class="py-2.5 rounded-xl bg-auto-surface hover:bg-white/10 border border-auto-border text-xs font-bold text-white">
+                                        <i class="fa-solid fa-code-compare mr-1 text-amber-400"></i>Compare
+                                    </button>
+                                    <button onclick="toggleFavorite('${car.id}')" class="py-2.5 rounded-xl bg-auto-surface hover:bg-white/10 border border-auto-border text-xs font-bold ${isFav ? 'text-rose-400' : 'text-white'}">
+                                        <i class="fa-solid fa-heart mr-1"></i>${isFav ? 'Saved' : 'Favorite'}
+                                    </button>
+                                    <a href="https://wa.me/919876543210?text=${encodeURIComponent(`Hi AUTOHUB, I am interested in ${car.brand} ${car.model} (${car.variant}) [${car.id}]`)}" target="_blank" rel="noopener" class="py-2.5 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/35 border border-emerald-500/40 text-xs font-bold text-emerald-300 text-center">
+                                        <i class="fa-brands fa-whatsapp mr-1"></i>WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COMPLETE MANUFACTURER SPECIFICATIONS TABLE -->
+                    <section class="mt-10 bg-auto-card border border-auto-border rounded-3xl p-6 sm:p-8">
+                        <h2 class="font-display font-extrabold text-2xl text-white mb-6">Manufacturer Technical Specifications</h2>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                            ${[
+                                ['Engine / Battery', car.engine],
+                                ['Max Power', car.power],
+                                ['Max Torque', car.torque],
+                                ['Fuel & Transmission', `${car.fuel} • ${car.transmission}`],
+                                ['Mileage / Range', car.mileage],
+                                ['Seating & Boot Space', `${car.seating} Seater • ${car.bootSpace}`],
+                                ['Ground Clearance', car.groundClearance],
+                                ['Safety & Airbags', `${car.safetyRating} (${car.airbags} Airbags)`]
+                            ].map(([k, v]) => `
+                                <div class="bg-auto-surface border border-auto-border rounded-2xl p-4">
+                                    <span class="text-[11px] font-bold uppercase text-gray-400 block">${k}</span>
+                                    <span class="text-sm font-bold text-white mt-1 block">${v}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-auto-border">
+                            <h3 class="font-display font-bold text-sm uppercase tracking-wider text-amber-400 mb-3">Key Variant Highlights</h3>
+                            <div class="flex flex-wrap gap-2">
+                                ${car.features.map(f => `<span class="px-3.5 py-1.5 rounded-xl bg-auto-surface border border-auto-border text-xs font-medium text-gray-200"><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i>${f}</span>`).join('')}
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- VERIFIED CUSTOMER REVIEWS SECTION -->
+                    <section class="mt-8 bg-auto-card border border-auto-border rounded-3xl p-6 sm:p-8">
+                        <h2 class="font-display font-extrabold text-xl text-white mb-4">Owner & Test-Drive Reviews (${carReviews.length})</h2>
+                        <form onsubmit="submitCarReview(event, '${car.id}')" class="flex flex-col sm:flex-row gap-3 mb-6">
+                            <select id="car-rev-stars" class="sm:w-32 bg-auto-surface border border-auto-border rounded-xl px-3 py-2.5 text-xs font-bold text-amber-400">
+                                <option value="5">★★★★★ (5)</option>
+                                <option value="4">★★★★☆ (4)</option>
+                                <option value="3">★★★☆☆ (3)</option>
+                            </select>
+                            <input type="text" id="car-rev-text" required placeholder="Share your showroom or driving experience..." class="flex-1 bg-auto-surface border border-auto-border rounded-xl px-4 py-2.5 text-xs text-white">
+                            <button type="submit" class="accent-btn px-5 py-2.5 rounded-xl text-xs font-bold text-white">Post Review</button>
+                        </form>
+                        <div class="space-y-3">
+                            ${carReviews.length ? carReviews.map(r => `
+                                <div class="bg-auto-surface border border-auto-border rounded-2xl p-4">
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="font-bold text-white">${r.userName}</span>
+                                        <span class="text-amber-400">${'★'.repeat(r.rating)} &bull; <span class="text-gray-500">${r.date}</span></span>
+                                    </div>
+                                    <p class="text-xs text-gray-300">${r.comment}</p>
+                                </div>
+                            `).join('') : '<p class="text-xs text-gray-400">No reviews yet for this variant. Be the first to review!</p>'}
+                        </div>
+                    </section>
+                </div>
+            `;
+        }
+
+        // ==================== 4. DEDICATED BRANDS DIRECTORY (14 BRANDS) ====================
+        function renderBrands(root, params = {}) {
+            const selectedId = params.brandId || 'tata';
+            const brand = BRANDS.find(b => b.id === selectedId) || BRANDS[0];
+            const brandCars = CARS_DB.filter(c => c.brandId === brand.id);
+
+            root.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+                    <div class="mb-6">
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">14 Global & Indian Marques</span>
+                        <h1 class="font-display font-extrabold text-3xl text-white">Automotive Brand Pavilions</h1>
+                        <p class="text-xs text-gray-400 mt-1">Independent marketplace showcase. All brand names and logos belong to their respective manufacturers.</p>
+                    </div>
+
+                    <!-- Brand Selector Pills -->
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        ${BRANDS.map(b => `
+                            <button onclick="navigate('brands', {brandId: '${b.id}'})" class="px-4 py-2 rounded-xl text-xs font-bold border transition ${b.id === brand.id ? 'accent-btn text-white border-transparent shadow-lg' : 'bg-auto-card border-auto-border text-gray-300 hover:text-white'}">
+                                ${b.name}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <!-- Active Brand Pavilion Card -->
+                    <div class="bg-auto-card border border-auto-border rounded-3xl p-6 sm:p-8 mb-8">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                            <div class="space-y-2 max-w-2xl">
+                                <div class="flex items-center gap-3">
+                                    <span class="px-3 py-1 rounded-lg bg-white/10 text-amber-400 text-xs font-bold">${brand.origin}</span>
+                                    <span class="text-xs text-gray-400">${brand.segment}</span>
+                                </div>
+                                <h2 class="font-display font-extrabold text-3xl text-white">${brand.name}</h2>
+                                <p class="text-sm text-gray-300 leading-relaxed">${brand.desc}</p>
+                            </div>
+                            <div class="bg-auto-surface border border-amber-500/40 rounded-2xl p-4 shrink-0 space-y-1.5">
+                                <span class="text-[11px] font-bold uppercase text-amber-400 block">Starting Range: ${brand.startingPrice}</span>
+                                <p class="text-xs font-semibold text-white"><i class="fa-solid fa-gift text-rose-500 mr-1.5"></i>${brand.offer}</p>
+                                <button onclick="openBookingModal()" class="mt-2 w-full accent-btn py-2 rounded-xl text-xs font-bold text-white">Schedule ${brand.name} Test Drive</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Brand Inventory -->
+                    <h3 class="font-display font-extrabold text-xl text-white mb-5">Available ${brand.name} Inventory in Showrooms</h3>
+                    ${brandCars.length ? `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${brandCars.map(renderCarCard).join('')}
+                        </div>
+                    ` : `
+                        <div class="bg-auto-card border border-auto-border rounded-3xl p-8 text-center">
+                            <p class="text-sm text-gray-300 mb-4">Stock allocation for <strong>${brand.name}</strong> is updated daily across partner dealerships.</p>
+                            <button onclick="openQuoteModal('CAR-101')" class="gold-btn px-5 py-2.5 rounded-xl text-xs font-extrabold">Request Custom ${brand.name} Allocation Quote</button>
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        // ==================== 5. 4-CAR SIDE-BY-SIDE COMPARISON ENGINE ====================
+        function renderCompare(root) {
+            const selectedCars = STATE.compareIds.map(id => CARS_DB.find(c => c.id === id)).filter(Boolean);
+
+            root.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Decision Intelligence</span>
+                            <h1 class="font-display font-extrabold text-3xl text-white">Compare Up to 4 Cars Side-by-Side</h1>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <select id="add-compare-select" class="bg-auto-card border border-auto-border rounded-xl px-3.5 py-2 text-xs text-white">
+                                ${CARS_DB.map(c => `<option value="${c.id}">${c.brand} ${c.model} (${c.priceDisplay})</option>`).join('')}
+                            </select>
+                            <button onclick="toggleCompare(document.getElementById('add-compare-select').value, true)" class="accent-btn px-4 py-2 rounded-xl text-xs font-bold text-white">
+                                + Add Car
+                            </button>
+                        </div>
+                    </div>
+
+                    ${selectedCars.length ? `
+                        <div class="overflow-x-auto bg-auto-card border border-auto-border rounded-3xl">
+                            <table class="w-full text-left border-collapse min-w-[680px]">
+                                <thead>
+                                    <tr class="border-b border-auto-border">
+                                        <th class="p-5 text-xs font-bold uppercase text-gray-400 w-44">Specification</th>
+                                        ${selectedCars.map(c => `
+                                            <th class="p-5 align-top">
+                                                <div class="relative">
+                                                    <button onclick="toggleCompare('${c.id}')" class="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white text-xs"><i class="fa-solid fa-xmark"></i></button>
+                                                    <img src="${c.image}" class="w-full h-32 object-cover rounded-2xl mb-3" />
+                                                    <span class="text-[10px] font-bold uppercase text-rose-400">${c.brand}</span>
+                                                    <h3 class="font-display font-extrabold text-base text-white">${c.model}</h3>
+                                                    <p class="text-xs text-gray-400">${c.variant}</p>
+                                                </div>
+                                            </th>
+                                        `).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-auto-border text-xs sm:text-sm">
+                                    ${[
+                                        ['Ex-Showroom Price', c => `<strong class="text-amber-400 text-base">${c.priceDisplay}</strong>`],
+                                        ['Condition', c => c.condition],
+                                        ['Engine / Battery', c => c.engine],
+                                        ['Max Power', c => `<strong>${c.power}</strong>`],
+                                        ['Max Torque', c => c.torque],
+                                        ['Fuel & Transmission', c => `${c.fuel} • ${c.transmission}`],
+                                        ['Mileage / Range', c => `<span class="text-emerald-400 font-bold">${c.mileage}</span>`],
+                                        ['Seating & Boot', c => `${c.seating} Seater • ${c.bootSpace}`],
+                                        ['Safety & Airbags', c => `${c.safetyRating} (${c.airbags} Airbags)`],
+                                        ['Warranty', c => c.warranty]
+                                    ].map(([label, fn]) => `
+                                        <tr class="hover:bg-white/[0.02]">
+                                            <td class="p-4 font-bold text-gray-400 bg-auto-surface/50">${label}</td>
+                                            ${selectedCars.map(c => `<td class="p-4 text-gray-200">${fn(c)}</td>`).join('')}
+                                        </tr>
+                                    `).join('')}
+                                    <tr>
+                                        <td class="p-4 font-bold text-gray-400 bg-auto-surface/50">Action</td>
+                                        ${selectedCars.map(c => `
+                                            <td class="p-4">
+                                                <button onclick="openBookingModal('${c.id}')" class="w-full accent-btn py-2 rounded-xl text-xs font-bold text-white">Book Test Drive</button>
+                                            </td>
+                                        `).join('')}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Intelligent Comparison Summary -->
+                        <div class="mt-6 bg-gradient-to-r from-rose-950/40 via-auto-card to-amber-950/30 border border-rose-500/30 rounded-3xl p-6">
+                            <h3 class="font-display font-bold text-base text-white mb-2"><i class="fa-solid fa-lightbulb text-amber-400 mr-2"></i>AUTOHUB Comparison Verdict</h3>
+                            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                                Comparing <strong>${selectedCars.map(c => `${c.brand} ${c.model}`).join(' vs ')}</strong>:
+                                Choose <strong>${[...selectedCars].sort((a,b) => a.exShowroomINR - b.exShowroomINR)[0].brand} ${[...selectedCars].sort((a,b) => a.exShowroomINR - b.exShowroomINR)[0].model}</strong> for the lowest entry price (${[...selectedCars].sort((a,b) => a.exShowroomINR - b.exShowroomINR)[0].priceDisplay}), or opt for <strong>${[...selectedCars].sort((a,b) => parseInt(b.power) - parseInt(a.power))[0].brand} ${[...selectedCars].sort((a,b) => parseInt(b.power) - parseInt(a.power))[0].model}</strong> if peak horsepower (${[...selectedCars].sort((a,b) => parseInt(b.power) - parseInt(a.power))[0].power}) is your top priority.
+                            </p>
+                        </div>
+                    ` : `
+                        <div class="bg-auto-card border border-auto-border rounded-3xl p-12 text-center">
+                            <p class="text-gray-400 mb-4">Select up to 4 vehicles from the dropdown above to compare specifications side-by-side.</p>
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        // ==================== 6. CAR FINANCE EMI CALCULATOR & AI CAR ASSISTANT ====================
+        function renderServices(root) {
+            root.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 animate-fade-in">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Smart Ownership Suite</span>
+                        <h1 class="font-display font-extrabold text-3xl text-white">Auto Finance EMI Calculator & AI Automotive Advisor</h1>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- INTERACTIVE EMI CALCULATOR -->
+                        <section class="lg:col-span-6 bg-auto-card border border-auto-border rounded-3xl p-6 sm:p-8 space-y-5">
+                            <div class="flex items-center justify-between">
+                                <h2 class="font-display font-extrabold text-xl text-white"><i class="fa-solid fa-calculator text-rose-500 mr-2"></i>Car Loan EMI Calculator</h2>
+                                <span class="text-[11px] px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 font-bold">Estimate</span>
+                            </div>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-400 mb-1">Select Vehicle Preset</label>
+                                    <select id="emi-car-preset" onchange="applyEmiCarPreset(this.value)" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-xs text-white">
+                                        ${CARS_DB.map(c => `<option value="${c.exShowroomINR}">${c.brand} ${c.model} — ${c.priceDisplay}</option>`).join('')}
+                                    </select>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-gray-400 font-bold">Vehicle Price (₹)</span>
+                                        <span id="emi-price-val" class="text-white font-bold">₹19.49 Lakh</span>
+                                    </div>
+                                    <input type="range" id="emi-price" min="400000" max="25000000" step="50000" value="1949000" oninput="calculateEMI()" class="w-full accent-rose-600">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs mb-1">
+                                        <span class="text-gray-400 font-bold">Down Payment (₹)</span>
+                                        <span id="emi-down-val" class="text-emerald-400 font-bold">₹3.50 Lakh</span>
+                                    </div>
+                                    <input type="range" id="emi-down" min="0" max="15000000" step="25000" value="350000" oninput="calculateEMI()" class="w-full accent-emerald-500">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-400 mb-1">Interest Rate (% p.a.)</label>
+                                        <input type="number" id="emi-rate" value="8.75" step="0.1" min="5" max="20" oninput="calculateEMI()" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2 text-sm text-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-400 mb-1">Tenure (Years)</label>
+                                        <select id="emi-years" onchange="calculateEMI()" class="w-full bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2 text-sm text-white">
+                                            ${[1,2,3,4,5,6,7].map(y => `<option value="${y}" ${y === 5 ? 'selected' : ''}>${y} Years (${y*12} Mos)</option>`).join('')}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Calculated Results Box -->
+                            <div class="bg-auto-surface border border-rose-500/40 rounded-2xl p-5 space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold uppercase text-gray-400">Estimated Monthly EMI</span>
+                                    <span id="emi-monthly-out" class="font-display font-extrabold text-3xl text-rose-500">₹33,005</span>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2 pt-3 border-t border-auto-border text-xs">
+                                    <div>
+                                        <span class="text-gray-400 block">Principal Loan</span>
+                                        <strong id="emi-principal-out" class="text-white">₹15.99 Lakh</strong>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-400 block">Total Interest</span>
+                                        <strong id="emi-interest-out" class="text-amber-400">₹3.81 Lakh</strong>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-400 block">Total Payable</span>
+                                        <strong id="emi-total-out" class="text-white">₹19.80 Lakh</strong>
+                                    </div>
+                                </div>
+                                <p class="text-[10px] text-gray-500">Disclaimer: Calculated values are indicative estimates. Final APR & sanction terms depend on lender credit assessment.</p>
+                            </div>
+                        </section>
+
+                        <!-- AI-POWERED CAR ASSISTANT -->
+                        <section class="lg:col-span-6 bg-auto-card border border-auto-border rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-5">
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl gold-btn flex items-center justify-center font-bold text-lg">
+                                        <i class="fa-solid fa-robot"></i>
+                                    </div>
+                                    <div>
+                                        <h2 class="font-display font-extrabold text-xl text-white">AUTOHUB AI Automotive Advisor</h2>
+                                        <p class="text-xs text-gray-400">Ask about budgets, family SUVs, EV vs Hybrid ownership costs, or showroom stock.</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-wrap gap-1.5">
+                                    ${[
+                                        'Best family SUV under ₹25 Lakh?',
+                                        'Compare EV vs Hybrid running costs',
+                                        'Which luxury sedan has the best performance?',
+                                        'Best high-mileage city car under ₹10 Lakh?'
+                                    ].map(q => `
+                                        <button onclick="document.getElementById('auto-ai-input').value='${q}'; askAutoAiAdvisor()" class="px-3 py-1.5 rounded-xl bg-auto-surface hover:bg-white/10 border border-auto-border text-[11px] text-gray-200 transition">
+                                            ${q}
+                                        </button>
+                                    `).join('')}
+                                </div>
+
+                                <div id="auto-ai-response" class="bg-auto-surface border border-auto-border rounded-2xl p-4 min-h-[210px] max-h-[300px] overflow-y-auto text-xs sm:text-sm text-gray-300 leading-relaxed">
+                                    <p class="text-gray-400"><i class="fa-solid fa-sparkles text-amber-400 mr-1.5"></i>Hello! I analyze AUTOHUB's live showroom inventory (Tata, Mahindra, Maruti, Hyundai, Toyota, BMW, Porsche & more) to match you with the ideal car. Ask me anything!</p>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2">
+                                <input type="text" id="auto-ai-input" onkeydown="if(event.key==='Enter') askAutoAiAdvisor()" placeholder="Ask AUTOHUB AI Advisor..." class="flex-1 bg-auto-surface border border-auto-border focus:border-amber-400 rounded-xl px-4 py-3 text-xs sm:text-sm text-white focus:outline-none">
+                                <button onclick="askAutoAiAdvisor()" id="auto-ai-btn" class="gold-btn px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold shrink-0">Ask AI</button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            `;
+            calculateEMI();
+        }
+
+        function applyEmiCarPreset(val) {
+            document.getElementById('emi-price').value = val;
+            document.getElementById('emi-down').value = Math.round(Number(val) * 0.2);
+            calculateEMI();
+        }
+
+        function calculateEMI() {
+            const price = Number(document.getElementById('emi-price')?.value || 1949000);
+            let down = Number(document.getElementById('emi-down')?.value || 350000);
+            if (down >= price) down = Math.round(price * 0.8);
+            const rate = Number(document.getElementById('emi-rate')?.value || 8.75);
+            const years = Number(document.getElementById('emi-years')?.value || 5);
+
+            const principal = Math.max(0, price - down);
+            const monthlyRate = rate / 12 / 100;
+            const months = years * 12;
+
+            let emi = 0;
+            if (monthlyRate > 0) {
+                const factor = Math.pow(1 + monthlyRate, months);
+                emi = (principal * monthlyRate * factor) / (factor - 1);
+            } else {
+                emi = principal / months;
+            }
+            const totalPayable = emi * months;
+            const totalInterest = Math.max(0, totalPayable - principal);
+
+            document.getElementById('emi-price-val').innerText = formatINR(price);
+            document.getElementById('emi-down-val').innerText = formatINR(down);
+            document.getElementById('emi-monthly-out').innerText = '₹' + Math.round(emi).toLocaleString('en-IN');
+            document.getElementById('emi-principal-out').innerText = formatINR(principal);
+            document.getElementById('emi-interest-out').innerText = formatINR(totalInterest);
+            document.getElementById('emi-total-out').innerText = formatINR(totalPayable);
+        }
+
+        async function askAutoAiAdvisor() {
+            const q = document.getElementById('auto-ai-input')?.value.trim();
+            if (!q) return;
+            const out = document.getElementById('auto-ai-response');
+            const btn = document.getElementById('auto-ai-btn');
+            btn.disabled = true;
+            btn.innerText = 'Analyzing...';
+            out.innerHTML = `<div class="animate-pulse text-amber-400">Evaluating showroom inventory, fuel economy & ownership costs...</div>`;
+
+            const inventoryContext = CARS_DB.map(c => `${c.brand} ${c.model} ${c.variant} (${c.condition}, ${c.category}, ${c.fuel}, ${c.priceDisplay}, ${c.power}, ${c.mileage})`).join('; ');
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                const res = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `You are AUTOHUB AI Automotive Advisor. Recommend cars ONLY from our verified showroom inventory: [${inventoryContext}]. User question: "${q}". Be concise, cite exact prices and specs from the inventory, and clearly note that ownership/fuel savings are estimates.`
+                            }]
+                        }]
+                    })
+                });
+                if (!res.ok) throw new Error('Fallback');
+                const data = await res.json();
+                const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!text) throw new Error('Empty');
+                out.innerHTML = `<div class="whitespace-pre-line text-gray-200">${text}</div>`;
+            } catch (e) {
+                // Grounded deterministic recommendation fallback
+                const lower = q.toLowerCase();
+                let picks = CARS_DB;
+                if (lower.includes('ev') || lower.includes('electric') || lower.includes('hybrid')) {
+                    picks = CARS_DB.filter(c => ['Electric', 'Hybrid'].includes(c.fuel));
+                } else if (lower.includes('suv') || lower.includes('family')) {
+                    picks = CARS_DB.filter(c => c.category === 'SUV');
+                } else if (lower.includes('10 lakh') || lower.includes('mileage') || lower.includes('budget')) {
+                    picks = CARS_DB.filter(c => c.exShowroomINR <= 1600000);
+                } else if (lower.includes('luxury') || lower.includes('performance')) {
+                    picks = CARS_DB.filter(c => ['Luxury', 'Sports car'].includes(c.category));
+                }
+                out.innerHTML = `
+                    <div class="space-y-3">
+                        <p class="font-bold text-amber-400">Recommended Vehicles from Verified AUTOHUB Inventory:</p>
+                        ${picks.slice(0, 3).map(c => `
+                            <div onclick="navigate('details', {id: '${c.id}'})" class="p-3 rounded-xl bg-auto-card border border-auto-border hover:border-rose-500 cursor-pointer">
+                                <strong class="text-white">${c.brand} ${c.model} ${c.variant}</strong> — <span class="text-amber-400 font-bold">${c.priceDisplay}</span>
+                                <p class="text-xs text-gray-400 mt-0.5">${c.fuel} &bull; ${c.power} &bull; ${c.mileage} &bull; ${c.safetyRating}</p>
+                            </div>
+                        `).join('')}
+                        <p class="text-[11px] text-gray-500">Note: Running cost & range figures are manufacturer-rated estimates.</p>
+                    </div>
+                `;
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Ask AI';
+            }
+        }
+
+        // ==================== 7. MULTI-ROLE DASHBOARDS (CUSTOMER / SHOWROOM MANAGER / ADMIN) ====================
+        function renderDashboard(root) {
+            const role = STATE.user.role;
+
+            root.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 animate-fade-in">
+                    <!-- Role Switcher Header -->
+                    <div class="bg-auto-card border border-auto-border rounded-3xl p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-rose-500">Role-Based Access Control (RBAC)</span>
+                            <h1 class="font-display font-extrabold text-2xl sm:text-3xl text-white">Welcome, ${STATE.user.name}</h1>
+                            <p class="text-xs text-gray-400 mt-0.5">Active Role: <strong class="text-amber-400 uppercase">${role.replace('_', ' ')}</strong> &bull; ${STATE.user.email}</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="switchDemoRole('customer')" class="px-3.5 py-2 rounded-xl text-xs font-bold border ${role === 'customer' ? 'accent-btn text-white border-transparent' : 'bg-auto-surface border-auto-border text-gray-300'}">Customer View</button>
+                            <button onclick="switchDemoRole('showroom_manager')" class="px-3.5 py-2 rounded-xl text-xs font-bold border ${role === 'showroom_manager' ? 'accent-btn text-white border-transparent' : 'bg-auto-surface border-auto-border text-gray-300'}">Showroom Manager</button>
+                            <button onclick="switchDemoRole('admin')" class="px-3.5 py-2 rounded-xl text-xs font-bold border ${role === 'admin' ? 'accent-btn text-white border-transparent' : 'bg-auto-surface border-auto-border text-gray-300'}">Administrator Panel</button>
+                        </div>
+                    </div>
+
+                    ${role === 'customer' ? renderCustomerDashboardBody() : ''}
+                    ${role === 'showroom_manager' || role === 'sales_exec' ? renderShowroomDashboardBody() : ''}
+                    ${role === 'admin' ? renderAdminDashboardBody() : ''}
+                </div>
+            `;
+        }
+
+        function renderCustomerDashboardBody() {
+            const favCars = STATE.favorites.map(id => CARS_DB.find(c => c.id === id)).filter(Boolean);
+            return `
+                <div class="space-y-8">
+                    <!-- Test Drive Bookings -->
+                    <section class="bg-auto-card border border-auto-border rounded-3xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="font-display font-extrabold text-xl text-white">My Test-Drive Appointments (${STATE.bookings.length})</h2>
+                            <button onclick="openBookingModal()" class="accent-btn px-4 py-2 rounded-xl text-xs font-bold text-white">+ New Booking</button>
+                        </div>
+                        <div class="space-y-3">
+                            ${STATE.bookings.map(b => {
+                                const car = CARS_DB.find(c => c.id === b.carId);
+                                const sh = SHOWROOMS.find(s => s.id === b.showroomId);
+                                return `
+                                    <div class="bg-auto-surface border border-auto-border rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-xs font-mono font-bold text-amber-400">${b.id}</span>
+                                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${b.status === 'Confirmed' ? 'bg-emerald-500/20 text-emerald-300' : (b.status === 'Cancelled' ? 'bg-rose-500/20 text-rose-300' : 'bg-amber-500/20 text-amber-300')}">${b.status}</span>
+                                            </div>
+                                            <h4 class="font-display font-bold text-base text-white mt-1">${car ? `${car.brand} ${car.model} (${car.variant})` : b.carId}</h4>
+                                            <p class="text-xs text-gray-400">${sh?.name || 'Showroom'} &bull; <strong>${b.date}</strong> at <strong>${b.slot}</strong></p>
+                                        </div>
+                                        ${b.status !== 'Cancelled' ? `
+                                            <button onclick="updateBookingStatus('${b.id}', 'Cancelled')" class="px-3.5 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/30 text-rose-300 text-xs font-bold self-start sm:self-center">Cancel Booking</button>
+                                        ` : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </section>
+
+                    <!-- Quotations -->
+                    <section class="bg-auto-card border border-auto-border rounded-3xl p-6">
+                        <h2 class="font-display font-extrabold text-xl text-white mb-4">My Pro-Forma Quotations (${STATE.quotations.length})</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${STATE.quotations.map(q => {
+                                const car = CARS_DB.find(c => c.id === q.carId);
+                                return `
+                                    <div class="bg-auto-surface border border-auto-border rounded-2xl p-4">
+                                        <div class="flex justify-between text-xs mb-1">
+                                            <span class="font-mono font-bold text-amber-400">${q.id}</span>
+                                            <span class="text-emerald-400 font-bold">${q.status}</span>
+                                        </div>
+                                        <h4 class="font-bold text-white">${car ? `${car.brand} ${car.model}` : q.carId}</h4>
+                                        <p class="text-xs text-gray-400 mt-1">City: ${q.city} &bull; Mode: ${q.financeMode}</p>
+                                        <p class="text-sm font-extrabold text-white mt-2">Estimated On-Road: ${q.estTotal}</p>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </section>
+
+                    <!-- Saved Favorite Vehicles -->
+                    <section>
+                        <h2 class="font-display font-extrabold text-xl text-white mb-4">Saved Favorite Vehicles (${favCars.length})</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${favCars.map(renderCarCard).join('')}
+                        </div>
+                    </section>
+                </div>
+            `;
+        }
+
+        function renderShowroomDashboardBody() {
+            const totalUnits = CARS_DB.reduce((acc, c) => acc + c.stock, 0);
+            return `
+                <div class="space-y-8">
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-auto-card border border-auto-border rounded-2xl p-5">
+                            <span class="text-xs text-gray-400">Showroom Stock Units</span>
+                            <p class="font-display font-extrabold text-3xl text-white mt-1">${totalUnits}</p>
+                        </div>
+                        <div class="bg-auto-card border border-auto-border rounded-2xl p-5">
+                            <span class="text-xs text-gray-400">Active Models</span>
+                            <p class="font-display font-extrabold text-3xl text-emerald-400 mt-1">${CARS_DB.length}</p>
+                        </div>
+                        <div class="bg-auto-card border border-auto-border rounded-2xl p-5">
+                            <span class="text-xs text-gray-400">Scheduled Test Drives</span>
+                            <p class="font-display font-extrabold text-3xl text-amber-400 mt-1">${STATE.bookings.length}</p>
+                        </div>
+                        <div class="bg-auto-card border border-auto-border rounded-2xl p-5">
+                            <span class="text-xs text-gray-400">Open Quotations</span>
+                            <p class="font-display font-extrabold text-3xl text-rose-500 mt-1">${STATE.quotations.length}</p>
+                        </div>
+                    </div>
+
+                    <!-- Approve / Reschedule Test Drives -->
+                    <section class="bg-auto-card border border-auto-border rounded-3xl p-6">
+                        <h3 class="font-display font-extrabold text-xl text-white mb-4">Manage Showroom Test-Drive Queue</h3>
+                        <div class="space-y-3">
+                            ${STATE.bookings.map(b => {
+                                const car = CARS_DB.find(c => c.id === b.carId);
+                                return `
+                                    <div class="bg-auto-surface border border-auto-border rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                        <div>
+                                            <span class="text-xs font-bold text-amber-400">${b.id} &bull; ${b.customerName} (${b.phone})</span>
+                                            <p class="text-sm font-bold text-white">${car ? `${car.brand} ${car.model}` : b.carId} — ${b.date} (${b.slot})</p>
+                                            <span class="text-xs text-gray-400">Status: <strong>${b.status}</strong></span>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <button onclick="updateBookingStatus('${b.id}', 'Confirmed')" class="px-3.5 py-2 rounded-xl bg-emerald-600/25 hover:bg-emerald-600/40 text-emerald-300 text-xs font-bold">Approve</button>
+                                            <button onclick="updateBookingStatus('${b.id}', 'Completed')" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold">Mark Done</button>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </section>
+
+                    <!-- Real-Time Inventory Control -->
+                    <section class="bg-auto-card border border-auto-border rounded-3xl p-6 overflow-x-auto">
+                        <h3 class="font-display font-extrabold text-xl text-white mb-4">Real-Time Showroom Inventory Control</h3>
+                        <table class="w-full text-left text-xs min-w-[650px]">
+                            <thead>
+                                <tr class="border-b border-auto-border text-gray-400 uppercase">
+                                    <th class="pb-3">ID</th>
+                                    <th class="pb-3">Vehicle</th>
+                                    <th class="pb-3">Price</th>
+                                    <th class="pb-3">Stock</th>
+                                    <th class="pb-3">Status</th>
+                                    <th class="pb-3">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-auto-border">
+                                ${CARS_DB.map(c => `
+                                    <tr>
+                                        <td class="py-3 font-mono text-amber-400">${c.id}</td>
+                                        <td class="py-3 font-bold text-white">${c.brand} ${c.model} (${c.condition})</td>
+                                        <td class="py-3 text-gray-300">${c.priceDisplay}</td>
+                                        <td class="py-3 font-bold text-white">${c.stock}</td>
+                                        <td class="py-3"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">${c.status}</span></td>
+                                        <td class="py-3">
+                                            <button onclick="recordVehicleSale('${c.id}')" class="px-3 py-1.5 rounded-lg accent-btn text-white font-bold">Record Sale (-1 Stock)</button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            `;
+        }
+
+        function renderAdminDashboardBody() {
+            return `
+                <div class="space-y-8">
+                    <!-- Admin KPI Overview -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-auto-card border border-auto-border rounded-2xl p-5">
+                            <span class="text-xs text-gray-400">Total Customers</span>
+                            <p class="font-display font-extrabold text-3xl text-white mt-1">8,412</p>
+                        </div>
+                        <div class="bg-auto-card border border-auto-border rounded-2xl p-5">
+                            <span class="text-xs text-gray-400">Partner Showrooms</span>
+                            <p class="font-display font-extrabold text-3xl text-amber-400 mt-1">${SHOWROOMS.length}</p>
+                        </div>
+                        <div class="bg-auto-card border border-auto-border rounded-2xl p-5">
+                            <span class="text-xs text-gray-400">Monthly GMV (Est.)</span>
+                            <p class="font-display font-extrabold text-3xl text-emerald-400 mt-1">₹14.8 Cr</p>
+                        </div>
+                        <div class="bg-auto-card border border-auto-border rounded-2xl p-5">
+                            <span class="text-xs text-gray-400">Listed Vehicles</span>
+                            <p class="font-display font-extrabold text-3xl text-rose-500 mt-1">${CARS_DB.length}</p>
+                        </div>
+                    </div>
+
+                    <!-- Add New Car Listing to Database -->
+                    <section class="bg-auto-card border border-auto-border rounded-3xl p-6">
+                        <h3 class="font-display font-extrabold text-xl text-white mb-4"><i class="fa-solid fa-plus-circle text-rose-500 mr-2"></i>Add New Vehicle to Marketplace Inventory</h3>
+                        <form onsubmit="adminAddNewCar(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <select id="adm-brand" class="bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-xs text-white">
+                                ${BRANDS.map(b => `<option value="${b.id}">${b.name}</option>`).join('')}
+                            </select>
+                            <input type="text" id="adm-model" required placeholder="Model (e.g., Harrier / Seltos)" class="bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-xs text-white">
+                            <input type="text" id="adm-variant" required placeholder="Variant (e.g., Fearless+ AT)" class="bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-xs text-white">
+                            <input type="number" id="adm-price" required placeholder="Ex-Showroom Price in INR" value="2150000" class="bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-xs text-white">
+                            <select id="adm-cat" class="bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-xs text-white">
+                                <option value="SUV">SUV</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="Luxury">Luxury</option>
+                                <option value="Electric vehicle">Electric vehicle</option>
+                            </select>
+                            <select id="adm-fuel" class="bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-xs text-white">
+                                <option value="Petrol">Petrol</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="Electric">Electric</option>
+                                <option value="Hybrid">Hybrid</option>
+                            </select>
+                            <input type="number" id="adm-stock" required value="5" min="1" placeholder="Stock Qty" class="bg-auto-surface border border-auto-border rounded-xl px-3.5 py-2.5 text-xs text-white">
+                            <button type="submit" class="accent-btn rounded-xl text-xs font-bold text-white py-2.5">Publish Vehicle Listing</button>
+                        </form>
+                    </section>
+
+                    ${renderShowroomDashboardBody()}
+
+                    <!-- System Audit Logs -->
+                    <section class="bg-auto-card border border-auto-border rounded-3xl p-6">
+                        <h3 class="font-display font-extrabold text-lg text-white mb-3">Security & Transaction Audit Logs</h3>
+                        <div class="space-y-2 max-h-60 overflow-y-auto">
+                            ${STATE.activityLogs.map(l => `
+                                <div class="flex justify-between text-xs bg-auto-surface border border-auto-border rounded-xl px-4 py-2.5">
+                                    <span class="text-gray-200">${l.msg}</span>
+                                    <span class="text-gray-500">${l.time}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </section>
+                </div>
+            `;
+        }
+
+        // ==================== 8. CONTACT & ABOUT ARCHITECTURE PAGES ====================
+        function renderContact(root) {
+            root.innerHTML = `
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 animate-fade-in">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-rose-500">24/7 Concierge & Showrooms</span>
+                        <h1 class="font-display font-extrabold text-3xl text-white">Contact AUTOHUB Dealerships</h1>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <form onsubmit="event.preventDefault(); showToast('Inquiry routed to nearest Showroom Sales Executive!', 'success'); this.reset();" class="bg-auto-card border border-auto-border rounded-3xl p-6 sm:p-8 space-y-4">
+                            <h2 class="font-display font-bold text-xl text-white">Send Direct Inquiry</h2>
+                            <input type="text" required placeholder="Your Full Name" class="w-full bg-auto-surface border border-auto-border rounded-xl px-4 py-3 text-sm text-white">
+                            <input type="email" required placeholder="Email Address" class="w-full bg-auto-surface border border-auto-border rounded-xl px-4 py-3 text-sm text-white">
+                            <input type="tel" required placeholder="Phone / WhatsApp Number" class="w-full bg-auto-surface border border-auto-border rounded-xl px-4 py-3 text-sm text-white">
+                            <textarea rows="4" required placeholder="Ask about availability, corporate discounts, exchange valuation, or test drives..." class="w-full bg-auto-surface border border-auto-border rounded-xl px-4 py-3 text-sm text-white"></textarea>
+                            <button type="submit" class="w-full accent-btn py-3 rounded-xl text-sm font-bold text-white">Submit Inquiry</button>
+                        </form>
+
+                        <div class="space-y-4">
+                            ${SHOWROOMS.map(sh => `
+                                <div class="bg-auto-card border border-auto-border rounded-3xl p-6 space-y-2">
+                                    <div class="flex justify-between items-start">
+                                        <h3 class="font-display font-bold text-lg text-white">${sh.name}</h3>
+                                        <span class="text-[11px] font-mono text-amber-400">${sh.coords}</span>
+                                    </div>
+                                    <p class="text-xs text-gray-300">${sh.address}</p>
+                                    <p class="text-xs text-gray-400">Manager: <strong class="text-white">${sh.manager}</strong> &bull; Tel: ${sh.phone}</p>
+                                    <div class="pt-2 flex gap-2">
+                                        <button onclick="openBookingModal()" class="accent-btn px-4 py-2 rounded-xl text-xs font-bold text-white">Book Showroom Slot</button>
+                                        <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl bg-emerald-600/20 text-emerald-300 border border-emerald-500/40 text-xs font-bold"><i class="fa-brands fa-whatsapp mr-1"></i>WhatsApp Desk</a>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAbout(root) {
+            root.innerHTML = `
+                <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-fade-in">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Production Engineering Specification</span>
+                        <h1 class="font-display font-extrabold text-3xl sm:text-4xl text-white mt-1">AUTOHUB Full-Stack Architecture, Database & Deployment Guide</h1>
+                        <p class="text-sm text-gray-400 mt-2">Complete technical blueprint for Python FastAPI/Flask backend, PostgreSQL/SQLite transactional schema, RBAC security, and external integrations.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-auto-card border border-auto-border rounded-3xl p-6 space-y-3">
+                            <h3 class="font-display font-bold text-lg text-white"><i class="fa-solid fa-database text-rose-500 mr-2"></i>17-Table Relational Schema</h3>
+                            <pre class="text-[11px] text-gray-300 font-mono bg-auto-surface p-4 rounded-2xl border border-auto-border overflow-x-auto">users (id, email, password_hash, role, verified)
+brands, cars, car_variants, car_images
+showrooms, showroom_inventory (stock, status)
+test_drive_bookings (UNIQUE car_id, date, slot)
+favorites, comparisons, inquiries, quotations
+sales, payments (razorpay_order_id), reviews
+notifications, activity_logs (audit trail)</pre>
+                        </div>
+                        <div class="bg-auto-card border border-auto-border rounded-3xl p-6 space-y-3">
+                            <h3 class="font-display font-bold text-lg text-white"><i class="fa-solid fa-shield-halved text-amber-400 mr-2"></i>Security & API Integrations</h3>
+                            <ul class="text-xs text-gray-300 space-y-2 leading-relaxed">
+                                <li><strong class="text-white">• Transactional Inventory:</strong> Atomic SQL transactions decrement <code class="text-rose-400">showroom_inventory.stock</code> upon verified sale completion.</li>
+                                <li><strong class="text-white">• Booking Slot Lock:</strong> Composite unique constraint prevents double-booking the same vehicle & time slot.</li>
+                                <li><strong class="text-white">• Security Controls:</strong> Argon2id password hashing, HTTPOnly Secure cookies, CSRF protection, parameterized ORM queries, and rate limiting.</li>
+                                <li><strong class="text-white">• Cloud Services:</strong> Cloudinary signed uploads, Google Maps Places API, Razorpay booking deposits, and SMTP/WhatsApp alerts.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-auto-card border border-auto-border rounded-3xl p-6 space-y-3">
+                        <h3 class="font-display font-bold text-lg text-white">Local Setup & Production Deployment</h3>
+                        <pre class="bg-auto-surface border border-auto-border rounded-2xl p-4 text-xs text-emerald-300 overflow-x-auto"><code># 1. Environment Setup
+python -m venv venv && source venv/bin/activate
+pip install fastapi uvicorn sqlalchemy psycopg2-binary passlib[bcrypt] python-dotenv razorpay cloudinary
+
+# 2. Configure .env (Never commit secrets)
+DATABASE_URL=postgresql://autohub_admin:strongpass@localhost:5432/autohub_prod
+SECRET_KEY=replace-with-64-char-hex-secret
+GOOGLE_MAPS_API_KEY=your_maps_key
+CLOUDINARY_URL=cloudinary://key:secret@cloud_name
+RAZORPAY_KEY_ID=rzp_live_xxxxx
+
+# 3. Launch Production Server & Run Pytest Suite
+pytest tests/ -v
+uvicorn app:app --host 0.0.0.0 --port 8000 --workers 4</code></pre>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==================== INTERACTIVE ACTIONS & CONTROLLERS ====================
+        function toggleFavorite(carId) {
+            const idx = STATE.favorites.indexOf(carId);
+            if (idx > -1) {
+                STATE.favorites.splice(idx, 1);
+                showToast('Removed from your saved favorites.', 'info');
+            } else {
+                STATE.favorites.push(carId);
+                showToast('Vehicle saved to your Favorites!', 'success');
+            }
+            renderApp();
+        }
+
+        function toggleCompare(carId, forceAdd = false) {
+            const idx = STATE.compareIds.indexOf(carId);
+            if (idx > -1 && !forceAdd) {
+                STATE.compareIds.splice(idx, 1);
+                showToast('Removed from comparison tray.', 'info');
+            } else if (idx === -1) {
+                if (STATE.compareIds.length >= 4) {
+                    showToast('Maximum 4 cars can be compared at once.', 'error');
+                    return;
+                }
+                STATE.compareIds.push(carId);
+                showToast('Added to 4-Car Comparison!', 'success');
+            }
+            document.getElementById('nav-compare-count').innerText = STATE.compareIds.length;
+            renderApp();
+        }
+
+        function openBookingModal(preselectCarId = '') {
+            const carSelect = document.getElementById('td-car');
+            const shSelect = document.getElementById('td-showroom');
+            const dateInput = document.getElementById('td-date');
+
+            carSelect.innerHTML = CARS_DB.map(c => `<option value="${c.id}" ${c.id === preselectCarId ? 'selected' : ''}>${c.brand} ${c.model} ${c.variant} (${c.priceDisplay})</option>`).join('');
+            shSelect.innerHTML = SHOWROOMS.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+
+            const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+            dateInput.min = tomorrow;
+            if (!dateInput.value) dateInput.value = tomorrow;
+
+            document.getElementById('booking-modal').classList.remove('hidden');
+        }
+
+        function submitTestDriveBooking(e) {
+            e.preventDefault();
+            const carId = document.getElementById('td-car').value;
+            const showroomId = document.getElementById('td-showroom').value;
+            const date = document.getElementById('td-date').value;
+            const slot = document.getElementById('td-slot').value;
+
+            // Prevent overlapping booking for the exact same vehicle, showroom, date, and slot
+            const conflict = STATE.bookings.some(b =>
+                b.carId === carId && b.showroomId === showroomId && b.date === date && b.slot === slot && b.status !== 'Cancelled'
+            );
+            if (conflict) {
+                showToast('Conflict: That vehicle is already booked for this date & time slot. Please choose another slot.', 'error');
+                return;
+            }
+
+            const bookingId = 'TD-2026-' + Math.floor(1000 + Math.random() * 9000);
+            STATE.bookings.unshift({
+                id: bookingId,
+                customerName: document.getElementById('td-name').value.trim(),
+                email: document.getElementById('td-email').value.trim(),
+                phone: document.getElementById('td-phone').value.trim(),
+                carId,
+                showroomId,
+                date,
+                slot,
+                status: 'Confirmed'
+            });
+            logAudit(`New Test Drive ${bookingId} booked for ${carId} on ${date} (${slot})`);
+            closeModal('booking-modal');
+            showToast(`Test Drive Confirmed! Booking ID: ${bookingId}`, 'success');
+            if (STATE.currentView === 'dashboard') renderApp();
+        }
+
+        function updateBookingStatus(bookingId, newStatus) {
+            const b = STATE.bookings.find(x => x.id === bookingId);
+            if (b) {
+                b.status = newStatus;
+                logAudit(`Booking ${bookingId} updated to ${newStatus}`);
+                showToast(`Booking ${bookingId} marked as ${newStatus}.`, 'info');
+                renderApp();
+            }
+        }
+
+        function openQuoteModal(carId) {
+            const car = CARS_DB.find(c => c.id === carId) || CARS_DB[0];
+            document.getElementById('quote-car-id').value = car.id;
+            document.getElementById('quote-modal-title').innerText = `Quotation: ${car.brand} ${car.model}`;
+            document.getElementById('quote-modal').classList.remove('hidden');
+        }
+
+        function submitQuotationRequest(e) {
+            e.preventDefault();
+            const carId = document.getElementById('quote-car-id').value;
+            const car = CARS_DB.find(c => c.id === carId) || CARS_DB[0];
+            const qtId = 'QT-' + Math.floor(1000 + Math.random() * 9000);
+            STATE.quotations.unshift({
+                id: qtId,
+                carId: car.id,
+                customerName: document.getElementById('quote-name').value,
+                city: document.getElementById('quote-city').value,
+                financeMode: document.getElementById('quote-finance').value,
+                estTotal: formatINR(car.onRoadEstINR),
+                status: 'Generated & Sent'
+            });
+            logAudit(`Quotation ${qtId} generated for ${car.brand} ${car.model}`);
+            closeModal('quote-modal');
+            showToast(`Quotation ${qtId} generated! View it in My Dashboard.`, 'success');
+        }
+
+        function submitCarReview(e, carId) {
+            e.preventDefault();
+            const rating = Number(document.getElementById('car-rev-stars').value);
+            const comment = document.getElementById('car-rev-text').value.trim();
+            if (!comment) return;
+            STATE.reviews.unshift({
+                id: 'REV-' + Date.now(),
+                carId,
+                userName: STATE.user.name,
+                rating,
+                comment,
+                date: new Date().toISOString().slice(0, 10)
+            });
+            showToast('Thank you! Your review has been published.', 'success');
+            renderApp();
+        }
+
+        function recordVehicleSale(carId) {
+            const car = CARS_DB.find(c => c.id === carId);
+            if (!car) return;
+            if (car.stock <= 0) {
+                showToast('Vehicle is currently out of stock.', 'error');
+                return;
+            }
+            car.stock -= 1;
+            if (car.stock === 0) car.status = 'Sold';
+            logAudit(`Authorized Sale Completed: ${car.brand} ${car.model} (${car.id}) — Remaining Stock: ${car.stock}`);
+            showToast(`Sale recorded for ${car.brand} ${car.model}. Inventory decremented!`, 'success');
+            renderApp();
+        }
+
+        function adminAddNewCar(e) {
+            e.preventDefault();
+            const brandId = document.getElementById('adm-brand').value;
+            const brandObj = BRANDS.find(b => b.id === brandId) || BRANDS[0];
+            const model = document.getElementById('adm-model').value.trim();
+            const variant = document.getElementById('adm-variant').value.trim();
+            const price = Number(document.getElementById('adm-price').value);
+            const category = document.getElementById('adm-cat').value;
+            const fuel = document.getElementById('adm-fuel').value;
+            const stock = Number(document.getElementById('adm-stock').value);
+
+            const newCar = {
+                id: 'CAR-' + Math.floor(200 + Math.random() * 800),
+                brand: brandObj.name,
+                brandId: brandObj.id,
+                model,
+                variant,
+                year: 2026,
+                condition: 'New',
+                category,
+                fuel,
+                transmission: 'Automatic',
+                exShowroomINR: price,
+                onRoadEstINR: Math.round(price * 1.14),
+                priceDisplay: formatINR(price),
+                engine: fuel === 'Electric' ? '50 kWh LFP Battery' : '1498 cc Turbocharged',
+                power: '150 bhp',
+                torque: '250 Nm',
+                mileage: fuel === 'Electric' ? '490 km Range' : '18.5 kmpl',
+                seating: 5,
+                bootSpace: '420 L',
+                groundClearance: '190 mm',
+                safetyRating: '5-Star Rated',
+                airbags: 6,
+                warranty: '3 Yr / Unlimited km',
+                stock,
+                status: 'Available',
+                showroomId: 'sh_1',
+                rating: 4.9,
+                isTrending: true,
+                isLatest: true,
+                image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80',
+                gallery: ['https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1000&q=80'],
+                features: ['360° Camera', 'ADAS Safety Suite', 'Wireless CarPlay', 'Panoramic Sunroof']
+            };
+            CARS_DB.unshift(newCar);
+            logAudit(`Admin published new listing: ${newCar.brand} ${newCar.model} (${newCar.id})`);
+            showToast(`${newCar.brand} ${newCar.model} added to live showroom catalog!`, 'success');
+            renderApp();
+        }
+
+        // Auth & Role Management
+        function switchDemoRole(role) {
+            STATE.user.role = role;
+            updateAuthHeader();
+            showToast(`Switched active session role to: ${role.replace('_', ' ').toUpperCase()}`, 'info');
+            if (STATE.currentView === 'dashboard') renderApp();
+        }
+
+        function switchAuthTab(mode) {
+            const nameField = document.getElementById('auth-name-field');
+            const btn = document.getElementById('auth-submit-btn');
+            const tabL = document.getElementById('tab-login');
+            const tabR = document.getElementById('tab-register');
+            if (mode === 'register') {
+                nameField.classList.remove('hidden');
+                btn.innerText = 'Create AUTOHUB Account';
+                tabR.className = 'px-4 py-1.5 rounded-lg text-xs font-bold bg-rose-600 text-white';
+                tabL.className = 'px-4 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white';
+            } else {
+                nameField.classList.add('hidden');
+                btn.innerText = 'Sign In to AUTOHUB';
+                tabL.className = 'px-4 py-1.5 rounded-lg text-xs font-bold bg-rose-600 text-white';
+                tabR.className = 'px-4 py-1.5 rounded-lg text-xs font-bold text-gray-400 hover:text-white';
+            }
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value.trim();
+            const name = document.getElementById('auth-name').value.trim() || email.split('@')[0];
+            const role = document.getElementById('auth-role').value;
+            STATE.isAuthenticated = true;
+            STATE.user = { id: 'USR-' + Date.now(), name, email, role, phone: '+91 98765 43210' };
+            updateAuthHeader();
+            closeModal('auth-modal');
+            showToast(`Signed in as ${name} (${role})`, 'success');
+            navigate('dashboard');
+        }
+
+        function updateAuthHeader() {
+            const slot = document.getElementById('auth-header-slot');
+            if (!slot) return;
+            slot.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <button onclick="navigate('dashboard')" class="flex items-center gap-2 bg-auto-surface border border-auto-border hover:border-amber-400 px-3 py-1.5 rounded-xl transition" title="Open My Dashboard">
+                        <span class="w-6 h-6 rounded-lg gold-btn flex items-center justify-center text-[11px] font-extrabold">${STATE.user.name.slice(0,2).toUpperCase()}</span>
+                        <span class="hidden sm:inline text-xs font-bold text-white">Dashboard</span>
+                    </button>
+                    <button onclick="document.getElementById('auth-modal').classList.remove('hidden')" class="p-2 rounded-xl bg-auto-surface border border-auto-border hover:border-rose-500 text-gray-300 text-xs" title="Switch Account / Role">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </button>
+                </div>
+            `;
+        }
+
+        function closeModal(id) {
+            document.getElementById(id)?.classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu')?.classList.toggle('hidden');
+        }
+
+        // ==================== BOOTSTRAP ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            updateAuthHeader();
+            navigate('home');
+        });
+    </script>
+</body>
+</html>
